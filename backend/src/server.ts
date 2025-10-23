@@ -49,12 +49,17 @@ dotenv.config();
 // Initialize Prisma client
 export const prisma = new PrismaClient();
 
+// Parse CORS origins from environment variable
+const corsOrigins = process.env['CORS_ORIGIN'] 
+  ? process.env['CORS_ORIGIN'].split(',').map(origin => origin.trim())
+  : ['http://localhost:3000'];
+
 // Create Express app
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: process.env['CORS_ORIGIN'] || 'http://localhost:3000',
+    origin: corsOrigins,
     methods: ['GET', 'POST'],
   },
 });
@@ -73,7 +78,7 @@ app.set('trust proxy', true);
 app.use(helmet());
 app.use(compression());
 app.use(cors({
-  origin: process.env['CORS_ORIGIN'] || 'http://localhost:3000',
+  origin: corsOrigins,
   credentials: true,
 }));
 app.use(morgan('combined'));
