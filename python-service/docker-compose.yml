@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  python-analytics:
+    build: .
+    container_name: kairo-python-analytics
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://username:password@host.docker.internal:5432/kairo_db
+      - ALPACA_API_KEY=${ALPACA_API_KEY}
+      - ALPACA_SECRET_KEY=${ALPACA_SECRET_KEY}
+      - ALPACA_BASE_URL=https://data.alpaca.markets/v2
+    volumes:
+      - ./app:/app/app
+      - ./main.py:/app/main.py
+    restart: unless-stopped
+    networks:
+      - kairo-network
+    depends_on:
+      - postgres
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: kairo-postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: kairo_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - kairo-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U username"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  kairo-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
