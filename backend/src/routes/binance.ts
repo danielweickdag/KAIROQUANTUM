@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { BinanceService } from '../services/BinanceService';
-import { auth } from '../middleware/auth';
+import { authenticateToken as auth } from '../middleware/auth';
 
 const router = Router();
 
