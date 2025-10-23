@@ -1,7 +1,7 @@
 'use client';
 
 import { AutoTradingPanel } from '@/components/trading/AutoTradingPanel';
-import { Navigation } from '@/components/Navigation';
+import Navigation from '@/components/Navigation';
 
 export default function AutoTradingPage() {
   return (

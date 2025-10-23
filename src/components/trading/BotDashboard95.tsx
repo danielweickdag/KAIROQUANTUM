@@ -56,13 +56,18 @@ export default function BotDashboard95() {
     return () => clearInterval(interval);
   }, []);
 
-  // Subscribe to bot signals
+  // Subscribe to bot performance updates and get recent signals
   useEffect(() => {
-    const unsubscribe = profitBot95.subscribe((signal) => {
-      setRecentSignals(prev => [signal, ...prev].slice(0, 10));
+    const unsubscribe = profitBot95.subscribe((performance) => {
+      setPerformance(performance);
+      // Update recent signals when performance changes
+      const signals = profitBot95.getRecentSignals(10);
+      setRecentSignals(signals);
     });
 
-    return unsubscribe;
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const handleStartBot = () => {

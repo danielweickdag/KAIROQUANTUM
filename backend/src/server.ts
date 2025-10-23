@@ -31,6 +31,7 @@ import checkoutRoutes from './routes/checkout';
 import subscriptionSyncRoutes from './routes/subscriptionSync';
 import feesRoutes from './routes/fees';
 import healthRoutes from './routes/health';
+import binanceRoutes from './routes/binance';
 import { getBrokerMonitoringService } from './services/BrokerMonitoringService';
 
 // Import middleware
@@ -64,6 +65,9 @@ const limiter = rateLimit({
   max: parseInt(process.env['RATE_LIMIT_MAX_REQUESTS'] || '100'), // limit each IP to 100 requests per windowMs
   message: 'Too many requests from this IP, please try again later.',
 });
+
+// Trust proxy for Railway infrastructure
+app.set('trust proxy', true);
 
 // Middleware
 app.use(helmet());
@@ -108,6 +112,7 @@ app.use('/api/checkout', checkoutRoutes);
 app.use('/api/subscription-sync', subscriptionSyncRoutes);
 app.use('/api/fees', feesRoutes);
 app.use('/api/health', healthRoutes);
+app.use('/api/binance', binanceRoutes);
 
 // Error handling middleware
 app.use(notFound);

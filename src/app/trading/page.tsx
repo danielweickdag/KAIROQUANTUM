@@ -508,7 +508,7 @@ function TradingContent() {
       price: orderType === 'market' ? 0 : parseFloat(orderPrice || '0'),
       orderType: orderType.toUpperCase() as 'MARKET' | 'LIMIT',
       brokerAccountId: selectedBrokerAccount?.id,
-      brokerConnectionId: selectedBrokerAccount?.brokerConnection?.id
+      brokerConnectionId: selectedBrokerAccount?.connectionId
     };
 
     // Validate trade data
@@ -1119,7 +1119,7 @@ function TradingContent() {
                                 </button>
                                 <button
                                   onClick={() => {
-                                    updateWorkflowStatus(workflow.id, 'stopped');
+                                    updateWorkflowStatus(workflow.id, 'inactive');
                                     toast.success('Workflow stopped');
                                   }}
                                   className="p-1 text-red-500 hover:text-red-700"

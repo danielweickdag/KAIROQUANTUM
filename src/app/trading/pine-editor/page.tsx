@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import PineScriptEditor from '../../../../components/trading/PineScriptEditor';
+import PineScriptEditor from '@/components/trading/PineScriptEditor';
 import AppLayout from '@/components/layouts/AppLayout';
 import { Code, Save, Play, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';

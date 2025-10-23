@@ -1,6 +1,6 @@
 'use client';
 
-import FuturesTrading from '../../../../components/trading/FuturesTrading';
+import FuturesTrading from '@/components/trading/FuturesTrading';
 import { BarChart3, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 

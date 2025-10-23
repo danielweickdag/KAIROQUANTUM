@@ -51,7 +51,6 @@ import {
   Workflow
 } from 'lucide-react';
 import { useWorkflow } from '@/contexts/WorkflowContext';
-import { WorkflowStep } from '../../../lib/services/workflowAutomationService';
 
 interface WorkflowNode {
   id: string;
@@ -304,12 +303,73 @@ export default function WorkflowBuilder() {
       return;
     }
 
-    const steps: WorkflowStep[] = nodes.map(node => ({
+    // Map node names to correct trigger types
+    const getTriggerType = (nodeName: string): 'price_alert' | 'time_based' | 'technical_indicator' | 'news_event' | 'portfolio_change' => {
+      switch (nodeName) {
+        case 'Price Change':
+          return 'price_alert';
+        case 'Time Based':
+        case 'Weekly Schedule':
+          return 'time_based';
+        case 'Technical Indicator':
+          return 'technical_indicator';
+        case 'Portfolio Value':
+        case 'Profit Target':
+          return 'portfolio_change';
+        default:
+          return 'price_alert';
+      }
+    };
+
+    // Map node names to correct action types
+    const getActionType = (nodeName: string): 'place_order' | 'send_notification' | 'update_portfolio' | 'execute_strategy' | 'log_event' => {
+      switch (nodeName) {
+        case 'Place Order':
+        case 'Place Stop Loss':
+        case 'Partial Close':
+          return 'place_order';
+        case 'Send Notification':
+          return 'send_notification';
+        case 'Adjust Risk':
+        case 'Rebalance':
+          return 'update_portfolio';
+        default:
+          return 'place_order';
+      }
+    };
+
+    // Map node names to correct condition types
+    const getConditionType = (nodeName: string): 'price_condition' | 'time_condition' | 'portfolio_condition' | 'market_condition' => {
+      switch (nodeName) {
+        case 'Price Condition':
+          return 'price_condition';
+        case 'Time Condition':
+          return 'time_condition';
+        case 'Portfolio Condition':
+          return 'portfolio_condition';
+        default:
+          return 'market_condition';
+      }
+    };
+
+    const triggers = nodes.filter(node => node.type === 'trigger').map(node => ({
       id: node.id,
-      type: node.type,
-      name: node.name,
-      config: node.config,
-      status: 'pending'
+      type: getTriggerType(node.name),
+      config: node.config
+    }));
+
+    const actions = nodes.filter(node => node.type === 'action').map(node => ({
+      id: node.id,
+      type: getActionType(node.name),
+      config: node.config
+    }));
+
+    const conditions = nodes.filter(node => node.type === 'condition').map(node => ({
+      id: node.id,
+      type: getConditionType(node.name),
+      operator: 'equals' as const,
+      value: node.config.value || '',
+      field: node.config.field || 'default'
     }));
 
     try {
@@ -317,7 +377,10 @@ export default function WorkflowBuilder() {
         name: workflowName,
         description: workflowDescription,
         isActive: false,
-        steps
+        status: 'inactive',
+        triggers,
+        actions,
+        conditions
       });
       
       // Reset form

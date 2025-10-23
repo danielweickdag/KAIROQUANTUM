@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useReducer, useEffect, useCallback, ReactNode } from 'react';
-import { workflowAutomationService, AutomatedWorkflow, WorkflowExecution, WorkflowTriggerEvent } from '../../lib/services/workflowAutomationService';
+import { workflowAutomationService, AutomatedWorkflow, WorkflowExecution, WorkflowTriggerEvent } from '../lib/services/workflowAutomationService';
 import { logger } from '../lib/logger';
 import { useRouter } from 'next/navigation';
 
@@ -33,7 +33,7 @@ type WorkflowAction =
   | { type: 'SET_CROSS_PAGE_DATA'; payload: Record<string, any> }
   | { type: 'CLEAR_CROSS_PAGE_DATA' }
   | { type: 'SYNC_STATE'; payload: WorkflowState }
-  | { type: 'UPDATE_WORKFLOW_STATUS'; payload: { workflowId: string; status: string } };
+  | { type: 'UPDATE_WORKFLOW_STATUS'; payload: { workflowId: string; status: 'active' | 'inactive' | 'error' | 'paused' } };
 
 const initialState: WorkflowState = {
   workflows: [],
@@ -136,7 +136,7 @@ interface WorkflowContextType {
   workflowState: WorkflowState;
   
   // Workflow Management
-  createWorkflow: (workflow: Omit<AutomatedWorkflow, 'id' | 'createdAt' | 'executionCount' | 'successRate'>) => Promise<string>;
+  createWorkflow: (workflow: Omit<AutomatedWorkflow, 'id' | 'createdAt' | 'updatedAt' | 'executionCount' | 'successRate'>) => Promise<string>;
   updateWorkflow: (id: string, updates: Partial<AutomatedWorkflow>) => Promise<boolean>;
   deleteWorkflow: (id: string) => Promise<boolean>;
   toggleWorkflow: (id: string) => Promise<boolean>;
@@ -144,11 +144,11 @@ interface WorkflowContextType {
   // Workflow Execution
   executeWorkflow: (workflowId: string, triggerData?: Record<string, any>) => Promise<string>;
   stopExecution: (executionId: string) => Promise<boolean>;
-  updateWorkflowStatus: (workflowId: string, status: string) => Promise<void>;
+  updateWorkflowStatus: (workflowId: string, status: 'active' | 'inactive' | 'error' | 'paused') => Promise<void>;
   
   // Cross-page Communication
   triggerFromDashboard: (workflowId: string, data?: Record<string, any>) => void;
-  receiveFromDashboard: (workflowId: string, data?: Record<string, any>) => void;
+  receiveFromDashboard: (workflowId: string, data?: Record<string, any>) => Promise<void>;
   navigateToTrading: (workflowId?: string, config?: Record<string, any>) => void;
   navigateToDashboard: (workflowId?: string, config?: Record<string, any>) => void;
   handleDeepLink: (searchParams: URLSearchParams) => void;
@@ -272,15 +272,12 @@ export function WorkflowProvider({ children }: { children: ReactNode }) {
       try {
         dispatch({ type: 'SET_LOADING', payload: true });
         
-        // Initialize the service
-        await workflowAutomationService.initialize();
-        
         // Load existing workflows
-        const workflows = workflowAutomationService.getAllWorkflows();
+        const workflows = await workflowAutomationService.getWorkflows();
         dispatch({ type: 'SET_WORKFLOWS', payload: workflows });
         
         // Load recent executions
-        const recentExecutions = workflowAutomationService.getRecentExecutions(10);
+        const recentExecutions = await workflowAutomationService.getRecentExecutions(10);
         dispatch({ type: 'SET_RECENT_EXECUTIONS', payload: recentExecutions });
         
         dispatch({ type: 'SET_CONNECTED', payload: true });
@@ -339,31 +336,31 @@ export function WorkflowProvider({ children }: { children: ReactNode }) {
     };
 
     // Register event listeners
-    workflowAutomationService.on('workflow:created', handleWorkflowCreated);
-    workflowAutomationService.on('workflow:updated', handleWorkflowUpdated);
-    workflowAutomationService.on('workflow:deleted', handleWorkflowDeleted);
-    workflowAutomationService.on('workflow:execution:started', handleExecutionStarted);
-    workflowAutomationService.on('workflow:execution:completed', handleExecutionCompleted);
-    workflowAutomationService.on('workflow:execution:failed', handleExecutionFailed);
-    workflowAutomationService.on('page:navigate', handlePageNavigation);
+    workflowAutomationService.addEventListener('workflow:created', handleWorkflowCreated);
+    workflowAutomationService.addEventListener('workflow:updated', handleWorkflowUpdated);
+    workflowAutomationService.addEventListener('workflow:deleted', handleWorkflowDeleted);
+    workflowAutomationService.addEventListener('workflow:execution:started', handleExecutionStarted);
+    workflowAutomationService.addEventListener('workflow:execution:completed', handleExecutionCompleted);
+    workflowAutomationService.addEventListener('workflow:execution:failed', handleExecutionFailed);
+    workflowAutomationService.addEventListener('page:navigate', handlePageNavigation);
 
     // Cleanup event listeners
     return () => {
-      workflowAutomationService.off('workflow:created', handleWorkflowCreated);
-      workflowAutomationService.off('workflow:updated', handleWorkflowUpdated);
-      workflowAutomationService.off('workflow:deleted', handleWorkflowDeleted);
-      workflowAutomationService.off('workflow:execution:started', handleExecutionStarted);
-      workflowAutomationService.off('workflow:execution:completed', handleExecutionCompleted);
-      workflowAutomationService.off('workflow:execution:failed', handleExecutionFailed);
-      workflowAutomationService.off('page:navigate', handlePageNavigation);
+      workflowAutomationService.removeEventListener('workflow:created', handleWorkflowCreated);
+      workflowAutomationService.removeEventListener('workflow:updated', handleWorkflowUpdated);
+      workflowAutomationService.removeEventListener('workflow:deleted', handleWorkflowDeleted);
+      workflowAutomationService.removeEventListener('workflow:execution:started', handleExecutionStarted);
+      workflowAutomationService.removeEventListener('workflow:execution:completed', handleExecutionCompleted);
+      workflowAutomationService.removeEventListener('workflow:execution:failed', handleExecutionFailed);
+      workflowAutomationService.removeEventListener('page:navigate', handlePageNavigation);
     };
   }, [router]);
 
   // Context methods
-  const createWorkflow = async (workflow: Omit<AutomatedWorkflow, 'id' | 'createdAt' | 'executionCount' | 'successRate'>): Promise<string> => {
+  const createWorkflow = async (workflow: Omit<AutomatedWorkflow, 'id' | 'createdAt' | 'updatedAt' | 'executionCount' | 'successRate'>): Promise<string> => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
-      const workflowId = workflowAutomationService.createWorkflow(workflow);
+      const workflowId = await workflowAutomationService.createWorkflow(workflow);
       return workflowId;
     } catch (error) {
       logger.error('Failed to create workflow', error as Error);
@@ -376,7 +373,7 @@ export function WorkflowProvider({ children }: { children: ReactNode }) {
 
   const updateWorkflow = async (id: string, updates: Partial<AutomatedWorkflow>): Promise<boolean> => {
     try {
-      const success = workflowAutomationService.updateWorkflow(id, updates);
+      const success = await workflowAutomationService.updateWorkflow(id, updates);
       if (!success) {
         dispatch({ type: 'SET_ERROR', payload: 'Workflow not found' });
       }
@@ -403,7 +400,7 @@ export function WorkflowProvider({ children }: { children: ReactNode }) {
   };
 
   const toggleWorkflow = async (id: string): Promise<boolean> => {
-    const workflow = workflowAutomationService.getWorkflow(id);
+    const workflow = await workflowAutomationService.getWorkflow(id);
     if (!workflow) {
       dispatch({ type: 'SET_ERROR', payload: 'Workflow not found' });
       return false;
@@ -440,7 +437,6 @@ export function WorkflowProvider({ children }: { children: ReactNode }) {
 
   const triggerFromDashboard = (workflowId: string, data?: Record<string, any>) => {
     try {
-      workflowAutomationService.triggerFromDashboard(workflowId, data);
       dispatch({ type: 'SELECT_WORKFLOW', payload: workflowId });
       dispatch({ type: 'SET_CROSS_PAGE_DATA', payload: { triggerSource: 'dashboard', workflowId, ...data } });
       
@@ -462,9 +458,9 @@ export function WorkflowProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const receiveFromDashboard = (workflowId: string, data?: Record<string, any>) => {
+  const receiveFromDashboard = async (workflowId: string, data?: Record<string, any>) => {
     // Process received data from dashboard
-    const workflow = workflowAutomationService.getWorkflow(workflowId);
+    const workflow = await workflowAutomationService.getWorkflow(workflowId);
     if (workflow) {
       dispatch({ type: 'SELECT_WORKFLOW', payload: workflowId });
       if (data) {
@@ -567,10 +563,10 @@ export function WorkflowProvider({ children }: { children: ReactNode }) {
   const refreshWorkflows = async () => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
-      const workflows = workflowAutomationService.getAllWorkflows();
+      const workflows = await workflowAutomationService.getWorkflows();
       dispatch({ type: 'SET_WORKFLOWS', payload: workflows });
       
-      const recentExecutions = workflowAutomationService.getRecentExecutions(10);
+      const recentExecutions = await workflowAutomationService.getRecentExecutions(10);
       dispatch({ type: 'SET_RECENT_EXECUTIONS', payload: recentExecutions });
     } catch (error) {
       logger.error('Failed to refresh workflows', error as Error);
@@ -584,11 +580,11 @@ export function WorkflowProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'CLEAR_ERROR' });
   };
 
-  const updateWorkflowStatus = async (workflowId: string, status: string) => {
+  const updateWorkflowStatus = async (workflowId: string, status: 'active' | 'inactive' | 'error' | 'paused') => {
     try {
       // Use updateWorkflow method with isActive status
       const isActive = status === 'active';
-      const success = workflowAutomationService.updateWorkflow(workflowId, { isActive });
+      const success = await workflowAutomationService.updateWorkflow(workflowId, { isActive });
       
       if (success) {
         dispatch({ type: 'UPDATE_WORKFLOW_STATUS', payload: { workflowId, status } });

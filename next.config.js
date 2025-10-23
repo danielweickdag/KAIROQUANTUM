@@ -27,15 +27,15 @@ const nextConfig = {
   
   // Environment variables
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://api.kairoquantum.com',
-    NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL || 'wss://api.kairoquantum.com',
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://kairoquantum-production.up.railway.app',
+    NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL || 'wss://kairoquantum-production.up.railway.app',
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || 'https://www.kairoquantum.com',
   },
   
   // API rewrites for backend integration
   async rewrites() {
     // Proxy API requests to configured backend URL in all environments
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.kairoquantum.com';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://kairoquantum-production.up.railway.app';
 
     return [
       {

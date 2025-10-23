@@ -6,19 +6,24 @@ import Link from 'next/link';
 
 interface BrokerAccount {
   id: string;
+  connectionId: string;
+  brokerType: string;
+  brokerName: string;
+  accountName: string;
   accountNumber: string;
   accountType: string;
   status: string;
+  environment: string;
   buyingPower: number;
   cashBalance: number;
   portfolioValue: number;
+  dayTradingBuyingPower?: number;
+  maintenanceMargin?: number;
   currency: string;
-  brokerConnection?: {
-    id: string;
-    accountName: string;
-    brokerType: string;
-    environment: string;
-  };
+  isActive: boolean;
+  isConnected: boolean;
+  lastSyncAt?: string;
+  lastUpdated?: string;
 }
 
 interface BrokerAccountSelectorProps {
@@ -87,13 +92,12 @@ export default function BrokerAccountSelector({
   };
 
   const availableBrokers = Array.from(
-    new Set(accounts.filter(a => a.brokerConnection).map(a => a.brokerConnection.brokerType))
+    new Set(accounts.map(a => a.brokerType))
   );
   const availableTypes = Array.from(new Set(accounts.map(a => a.accountType)));
 
   const filteredAccounts = accounts
-    .filter(a => a.brokerConnection) // Only include accounts with broker connections
-    .filter(a => (filterBroker === 'ALL' ? true : a.brokerConnection.brokerType === filterBroker))
+    .filter(a => (filterBroker === 'ALL' ? true : a.brokerType === filterBroker))
     .filter(a => (filterType === 'ALL' ? true : a.accountType === filterType))
     .sort((a, b) => {
       switch (sortBy) {
@@ -104,7 +108,7 @@ export default function BrokerAccountSelector({
         case 'buyingPower':
           return b.buyingPower - a.buyingPower;
         case 'name':
-          return (a.brokerConnection?.accountName || '').localeCompare(b.brokerConnection?.accountName || '');
+          return (a.accountName || '').localeCompare(b.accountName || '');
         default:
           return 0;
       }
@@ -119,12 +123,14 @@ export default function BrokerAccountSelector({
 
   const getBrokerDisplayName = (brokerType: string) => {
     const brokerNames: { [key: string]: string } = {
-      'ALPACA': 'Alpaca',
-      'INTERACTIVE_BROKERS': 'Interactive Brokers',
-      'TD_AMERITRADE': 'TD Ameritrade',
-      'SCHWAB': 'Charles Schwab',
-      'FIDELITY': 'Fidelity',
-      'E_TRADE': 'E*TRADE'
+      'alpaca': 'Alpaca',
+      'interactive_brokers': 'Interactive Brokers',
+      'td_ameritrade': 'TD Ameritrade',
+      'tradier': 'Tradier',
+      'robinhood': 'Robinhood',
+      'fidelity': 'Fidelity',
+      'schwab': 'Charles Schwab',
+      'etrade': 'E*TRADE'
     };
     return brokerNames[brokerType] || brokerType;
   };
@@ -196,14 +202,14 @@ export default function BrokerAccountSelector({
         className="relative w-full cursor-pointer rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
       >
         <span className="block truncate">
-          {selectedAccount && selectedAccount.brokerConnection ? (
+          {selectedAccount ? (
             <div className="flex items-center justify-between">
               <div>
                 <span className="font-medium">
-                  {getBrokerDisplayName(selectedAccount.brokerConnection.brokerType)}
+                  {getBrokerDisplayName(selectedAccount.brokerType)}
                 </span>
                 <span className="ml-2 text-gray-500">
-                  {selectedAccount.brokerConnection.accountName}
+                  {selectedAccount.accountName}
                 </span>
               </div>
               <div className="text-sm text-gray-600">
@@ -297,13 +303,13 @@ export default function BrokerAccountSelector({
                 <div className="flex-1">
                   <div className="flex items-center">
                     <span className="font-medium">
-                      {getBrokerDisplayName(account.brokerConnection.brokerType)}
+                      {getBrokerDisplayName(account.brokerType)}
                     </span>
                     <span className="ml-2 text-gray-500">
-                      {account.brokerConnection.accountName}
+                      {account.accountName}
                     </span>
                     <span className="ml-2 text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-                      {account.brokerConnection.environment}
+                      {account.environment}
                     </span>
                   </div>
                   <div className="text-sm text-gray-600 mt-1">

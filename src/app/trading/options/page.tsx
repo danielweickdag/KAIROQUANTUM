@@ -1,6 +1,6 @@
 'use client';
 
-import OptionsTrading from '../../../../components/trading/OptionsTrading';
+import OptionsTrading from '@/components/trading/OptionsTrading';
 import AppLayout from '@/components/layouts/AppLayout';
 import { Target, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';

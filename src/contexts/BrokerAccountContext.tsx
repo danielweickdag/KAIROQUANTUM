@@ -4,19 +4,24 @@ import React, { createContext, useContext, useState, useEffect, useCallback, Rea
 
 interface BrokerAccount {
   id: string;
+  connectionId: string;
+  brokerType: string;
+  brokerName: string;
+  accountName: string;
   accountNumber: string;
   accountType: string;
   status: string;
+  environment: string;
   buyingPower: number;
   cashBalance: number;
   portfolioValue: number;
+  dayTradingBuyingPower?: number;
+  maintenanceMargin?: number;
   currency: string;
-  brokerConnection: {
-    id: string;
-    accountName: string;
-    brokerType: string;
-    environment: string;
-  };
+  isActive: boolean;
+  isConnected: boolean;
+  lastSyncAt?: string;
+  lastUpdated?: string;
 }
 
 interface BrokerAccountContextType {

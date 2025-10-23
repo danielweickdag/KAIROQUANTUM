@@ -1,6 +1,6 @@
 'use client';
 
-import MarketUpdates from '../../../../components/trading/MarketUpdates';
+import MarketUpdates from '@/components/trading/MarketUpdates';
 import AppLayout from '@/components/layouts/AppLayout';
 import { TrendingUp, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';

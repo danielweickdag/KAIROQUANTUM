@@ -155,8 +155,11 @@ function DashboardContent() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-2 border-primary/20 border-t-primary"></div>
+            <p className="text-muted-foreground font-medium">Loading your dashboard...</p>
+          </div>
         </div>
       </DashboardLayout>
     );
@@ -164,110 +167,376 @@ function DashboardContent() {
 
   return (
     <DashboardLayout>
-      <div className="mx-auto max-w-7xl p-6 space-y-6">
-        {/* Welcome Header */}
-        <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 rounded-xl p-6 text-white">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold mb-2">
-                Welcome back, {user?.firstName}! 🚀
-              </h1>
-              <p className="text-blue-100">
-                Your trading performance is looking strong today. Ready to make some moves?
-              </p>
-              {/* Broker Account Selector */}
-              <div className="mt-4 max-w-md">
-                <label className="block text-sm font-medium text-blue-100 mb-2">
-                  Active Broker Account
+      <div className="mx-auto max-w-7xl p-6 space-y-8">
+        {/* Welcome Header - Landio-inspired Hero Section */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary via-blue-600 to-purple-700 rounded-3xl p-8 text-white shadow-2xl border border-white/10">
+          {/* Animated Background Elements */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/10"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-white/5 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-blue-400/10 to-transparent rounded-full blur-2xl"></div>
+          
+          {/* Floating Particles Animation */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white/30 rounded-full animate-pulse"></div>
+            <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-blue-200/40 rounded-full animate-ping"></div>
+            <div className="absolute top-1/2 right-1/4 w-1.5 h-1.5 bg-purple-200/30 rounded-full animate-pulse delay-1000"></div>
+          </div>
+          
+          <div className="relative flex items-center justify-between">
+            <div className="flex-1">
+              <div className="flex items-center space-x-4 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-white/20 to-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/20 shadow-lg">
+                  <span className="text-3xl animate-bounce">🚀</span>
+                </div>
+                <div>
+                  <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                    Welcome back, {user?.firstName}!
+                  </h1>
+                  <p className="text-blue-100 text-xl font-medium mt-2">
+                    Your AI-powered trading ecosystem is ready. <span className="text-yellow-300 font-semibold">Let's maximize your potential.</span>
+                  </p>
+                  <div className="flex items-center space-x-2 mt-3">
+                    <div className="flex items-center space-x-1">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                      <span className="text-sm text-green-200 font-medium">All systems operational</span>
+                    </div>
+                    <span className="text-white/40">•</span>
+                    <span className="text-sm text-blue-200">Real-time market analysis active</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Enhanced Broker Account Selector */}
+              <div className="mt-8 max-w-md">
+                <label className="block text-sm font-bold text-white/90 mb-3 flex items-center space-x-2">
+                  <Shield className="h-4 w-4" />
+                  <span>Active Trading Account</span>
                 </label>
-                <BrokerAccountSelector
-                  selectedAccount={selectedAccount}
-                  onAccountSelect={setSelectedAccount}
-                  placeholder="Select your trading account"
-                  className="text-gray-900"
-                />
+                <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md rounded-2xl p-1 border border-white/20 shadow-lg">
+                  <BrokerAccountSelector
+                    selectedAccount={selectedAccount}
+                    onAccountSelect={setSelectedAccount}
+                    placeholder="Select your trading account"
+                    className="bg-white text-foreground rounded-xl shadow-sm"
+                  />
+                </div>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
+            
+            <div className="flex items-center space-x-6">
               <button
                 onClick={() => setShowNotifications(!showNotifications)}
-                className="relative p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                className="relative p-4 rounded-2xl bg-gradient-to-br from-white/15 to-white/10 hover:from-white/25 hover:to-white/15 transition-all duration-300 backdrop-blur-md group border border-white/20 shadow-lg"
               >
-                <Bell className="h-5 w-5" />
-                <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
+                <Bell className="h-6 w-6 group-hover:animate-pulse" />
+                <span className="absolute -top-1 -right-1 h-5 w-5 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center shadow-lg">
+                  <span className="text-xs font-bold">3</span>
+                </span>
+                <div className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full animate-ping opacity-30"></div>
               </button>
-              <div className="hidden md:flex items-center space-x-4">
-                <div className="text-center">
-                  <p className="text-2xl font-bold">78.5%</p>
-                  <p className="text-sm text-blue-100">Win Rate</p>
+              
+              <div className="hidden lg:flex items-center space-x-6">
+                <div className="text-center bg-gradient-to-br from-white/15 to-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 group">
+                  <p className="text-4xl font-bold bg-gradient-to-r from-green-300 to-green-100 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">78.5%</p>
+                  <p className="text-sm text-white/80 font-semibold mt-1">Win Rate</p>
+                  <div className="w-full bg-white/20 rounded-full h-1 mt-2">
+                    <div className="bg-gradient-to-r from-green-400 to-green-300 h-1 rounded-full" style={{width: '78.5%'}}></div>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold">1.85x</p>
-                  <p className="text-sm text-blue-100">Profit Factor</p>
+                <div className="text-center bg-gradient-to-br from-white/15 to-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 group">
+                  <p className="text-4xl font-bold bg-gradient-to-r from-yellow-300 to-yellow-100 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">1.85x</p>
+                  <p className="text-sm text-white/80 font-semibold mt-1">Profit Factor</p>
+                  <div className="flex items-center justify-center mt-2">
+                    <TrendingUp className="h-4 w-4 text-green-300" />
+                  </div>
                 </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold">#12</p>
-                  <p className="text-sm text-blue-100">Global Rank</p>
+                <div className="text-center bg-gradient-to-br from-white/15 to-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 group">
+                  <p className="text-4xl font-bold bg-gradient-to-r from-purple-300 to-purple-100 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">#12</p>
+                  <p className="text-sm text-white/80 font-semibold mt-1">Global Rank</p>
+                  <div className="flex items-center justify-center mt-2">
+                    <Star className="h-4 w-4 text-yellow-300 fill-current" />
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+          
+          {/* AI Status Indicator */}
+          <div className="relative mt-8 flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 bg-gradient-to-r from-green-500/20 to-green-400/20 backdrop-blur-sm rounded-full px-4 py-2 border border-green-400/30">
+                <Brain className="h-4 w-4 text-green-300 animate-pulse" />
+                <span className="text-sm font-semibold text-green-200">AI Analysis Active</span>
+              </div>
+              <div className="flex items-center space-x-2 bg-gradient-to-r from-blue-500/20 to-blue-400/20 backdrop-blur-sm rounded-full px-4 py-2 border border-blue-400/30">
+                <Activity className="h-4 w-4 text-blue-300" />
+                <span className="text-sm font-semibold text-blue-200">Market Scanner Running</span>
+              </div>
+            </div>
+            <button 
+              onClick={handleEnableAll}
+              className="flex items-center space-x-2 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              <Zap className="h-5 w-5" />
+              <span>Activate All Systems</span>
+              <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
         </div>
 
+        {/* Integration Status Cards - Landio-inspired */}
+        <section aria-label="Integration Status" className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                  <Settings className="h-4 w-4 text-white" />
+                </div>
+                <span>Connected Integrations</span>
+              </h2>
+              <p className="text-muted-foreground mt-1">Your unified AI-powered trading ecosystem</p>
+            </div>
+            <div className="flex items-center space-x-2 bg-gradient-to-r from-green-500/20 to-green-400/20 rounded-full px-4 py-2 border border-green-200 dark:border-green-700">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm font-semibold text-green-700 dark:text-green-300">All Systems Connected</span>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Broker Integration */}
+            <div className="group bg-gradient-to-br from-card to-card/80 rounded-2xl p-6 border border-border shadow-lg hover:shadow-xl transition-all duration-300 hover:border-blue-500/30 hover:-translate-y-1">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <DollarSign className="h-6 w-6 text-white" />
+                </div>
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs font-medium text-green-600 dark:text-green-400">Connected</span>
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-foreground mb-2">Broker Accounts</h3>
+              <p className="text-sm text-muted-foreground mb-4">3 active trading accounts</p>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Interactive Brokers</span>
+                  <span className="text-green-600 dark:text-green-400 font-medium">✓ Active</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">TD Ameritrade</span>
+                  <span className="text-green-600 dark:text-green-400 font-medium">✓ Active</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Alpaca Markets</span>
+                  <span className="text-green-600 dark:text-green-400 font-medium">✓ Active</span>
+                </div>
+              </div>
+            </div>
+
+            {/* AI Analysis Integration */}
+            <div className="group bg-gradient-to-br from-card to-card/80 rounded-2xl p-6 border border-border shadow-lg hover:shadow-xl transition-all duration-300 hover:border-purple-500/30 hover:-translate-y-1">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Brain className="h-6 w-6 text-white" />
+                </div>
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs font-medium text-green-600 dark:text-green-400">Processing</span>
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-foreground mb-2">AI Analysis</h3>
+              <p className="text-sm text-muted-foreground mb-4">Real-time market intelligence</p>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Pattern Recognition</span>
+                  <span className="text-green-600 dark:text-green-400 font-medium">✓ Running</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Sentiment Analysis</span>
+                  <span className="text-green-600 dark:text-green-400 font-medium">✓ Running</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Risk Assessment</span>
+                  <span className="text-green-600 dark:text-green-400 font-medium">✓ Running</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Market Data Integration */}
+            <div className="group bg-gradient-to-br from-card to-card/80 rounded-2xl p-6 border border-border shadow-lg hover:shadow-xl transition-all duration-300 hover:border-orange-500/30 hover:-translate-y-1">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <BarChart3 className="h-6 w-6 text-white" />
+                </div>
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs font-medium text-green-600 dark:text-green-400">Live</span>
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-foreground mb-2">Market Data</h3>
+              <p className="text-sm text-muted-foreground mb-4">Real-time feeds & analytics</p>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Yahoo Finance</span>
+                  <span className="text-green-600 dark:text-green-400 font-medium">✓ Streaming</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Alpha Vantage</span>
+                  <span className="text-green-600 dark:text-green-400 font-medium">✓ Streaming</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">TradingView</span>
+                  <span className="text-green-600 dark:text-green-400 font-medium">✓ Streaming</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Automation Integration */}
+            <div className="group bg-gradient-to-br from-card to-card/80 rounded-2xl p-6 border border-border shadow-lg hover:shadow-xl transition-all duration-300 hover:border-green-500/30 hover:-translate-y-1">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Bot className="h-6 w-6 text-white" />
+                </div>
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs font-medium text-green-600 dark:text-green-400">Automated</span>
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-foreground mb-2">Automation</h3>
+              <p className="text-sm text-muted-foreground mb-4">Smart trading workflows</p>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Auto Trading</span>
+                  <span className="text-green-600 dark:text-green-400 font-medium">✓ Active</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Risk Management</span>
+                  <span className="text-green-600 dark:text-green-400 font-medium">✓ Active</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Portfolio Rebalancing</span>
+                  <span className="text-green-600 dark:text-green-400 font-medium">✓ Active</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Integration Performance Summary */}
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/10 dark:to-purple-900/10 rounded-2xl p-6 border border-blue-200 dark:border-blue-800">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                  <Activity className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-foreground">Integration Health</h3>
+                  <p className="text-sm text-muted-foreground">All systems operating at optimal performance</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-6">
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-green-600 dark:text-green-400">99.9%</p>
+                  <p className="text-xs text-muted-foreground">Uptime</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">12ms</p>
+                  <p className="text-xs text-muted-foreground">Latency</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">15</p>
+                  <p className="text-xs text-muted-foreground">Active APIs</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Enable Features Section with Nav */}
-        <section aria-label="Enable Features" className="rounded-xl">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Enable Features</h2>
+        <section aria-label="Enable Features" className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Feature Management</h2>
+              <p className="text-muted-foreground mt-1">Configure and control your trading features</p>
+            </div>
             <nav aria-label="Enable Features navigation">
-              <div className="inline-flex rounded-lg border border-gray-200 dark:border-gray-700 overflow-x-auto max-w-full">
-                <a href="#enable-actions" className="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Actions</a>
-                <a href="#enable-controls" className="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Controls</a>
+              <div className="inline-flex rounded-xl bg-muted p-1 shadow-sm">
+                <a href="#enable-actions" className="px-4 py-2 whitespace-nowrap text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-background rounded-lg transition-all duration-200">Actions</a>
+                <a href="#enable-controls" className="px-4 py-2 whitespace-nowrap text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-background rounded-lg transition-all duration-200">Controls</a>
               </div>
             </nav>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Actions Card */}
-            <div id="enable-actions" className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm overflow-hidden">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Featured Actions</h3>
+            <div id="enable-actions" className="group rounded-2xl border border-border bg-card p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/20">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <Zap className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-card-foreground">Featured Actions</h3>
+                  <p className="text-sm text-muted-foreground">Quick trading actions and tools</p>
+                </div>
+              </div>
               <div className="mt-4">
                 <TradingActions />
               </div>
             </div>
 
             {/* Controls Card */}
-            <div id="enable-controls" className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm overflow-hidden">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Feature Controls</h3>
-              <div className="mt-4 space-y-3">
-                <button
-                  onClick={handleEnableAll}
-                  className="w-full px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium"
-                >
-                  Enable All Features
-                </button>
-                <button
-                  onClick={handleDisableAll}
-                  className="w-full px-4 py-2 rounded-lg bg-gray-600 hover:bg-gray-700 text-white font-medium"
-                >
-                  Disable All Features
-                </button>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div id="enable-controls" className="group rounded-2xl border border-border bg-card p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/20">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 bg-secondary/10 rounded-xl flex items-center justify-center">
+                  <Settings className="h-5 w-5 text-secondary-foreground" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-card-foreground">Feature Controls</h3>
+                  <p className="text-sm text-muted-foreground">Manage your trading features</p>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 gap-3">
+                  <button
+                    onClick={handleEnableAll}
+                    className="w-full px-4 py-3 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-all duration-200"
+                  >
+                    Enable All Features
+                  </button>
+                  <button
+                    onClick={handleDisableAll}
+                    className="w-full px-4 py-3 rounded-xl bg-secondary hover:bg-secondary/90 text-secondary-foreground font-medium transition-all duration-200"
+                  >
+                    Disable All Features
+                  </button>
+                </div>
+                
+                <div className="grid grid-cols-1 gap-3">
                   <button
                     onClick={() => setGainzAlgoActive(true)}
-                    className="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium"
+                    className="px-4 py-3 rounded-xl bg-success/10 hover:bg-success/20 text-success border border-success/20 hover:border-success/40 font-medium transition-all duration-200"
                   >
-                    Enable GainzAlgo
+                    <div className="flex items-center justify-center space-x-2">
+                      <Bot className="h-4 w-4" />
+                      <span>Enable GainzAlgo</span>
+                    </div>
                   </button>
                   <button
                     onClick={() => setCopyTradingActive(true)}
-                    className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-medium"
+                    className="px-4 py-3 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/20 hover:border-purple-500/40 font-medium transition-all duration-200"
                   >
-                    Enable Copy Trading
+                    <div className="flex items-center justify-center space-x-2">
+                      <Users className="h-4 w-4" />
+                      <span>Enable Copy Trading</span>
+                    </div>
                   </button>
                   <button
                     onClick={() => setRiskManagementActive(true)}
-                    className="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-medium"
+                    className="px-4 py-3 rounded-xl bg-warning/10 hover:bg-warning/20 text-warning border border-warning/20 hover:border-warning/40 font-medium transition-all duration-200"
                   >
-                    Enable Risk Management
+                    <div className="flex items-center justify-center space-x-2">
+                      <Shield className="h-4 w-4" />
+                      <span>Enable Risk Management</span>
+                    </div>
                   </button>
                 </div>
               </div>
@@ -276,40 +545,43 @@ function DashboardContent() {
         </section>
 
         {/* Workflow Status Indicator */}
-        <div className={`rounded-lg p-4 border-2 transition-all duration-300 ${
-          workflowStatus === 'idle' ? 'bg-gray-50 border-gray-200' :
-          workflowStatus === 'partial' ? 'bg-yellow-50 border-yellow-300' :
-          workflowStatus === 'active' ? 'bg-blue-50 border-blue-300' :
-          'bg-green-50 border-green-300'
+        <div className={`rounded-2xl p-6 border transition-all duration-300 shadow-lg ${
+          workflowStatus === 'idle' ? 'bg-muted/50 border-border' :
+          workflowStatus === 'partial' ? 'bg-warning/5 border-warning/20' :
+          workflowStatus === 'active' ? 'bg-primary/5 border-primary/20' :
+          'bg-success/5 border-success/20'
         }`}>
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className={`w-3 h-3 rounded-full ${
-                workflowStatus === 'idle' ? 'bg-gray-400' :
-                workflowStatus === 'partial' ? 'bg-yellow-500 animate-pulse' :
-                workflowStatus === 'active' ? 'bg-blue-500 animate-pulse' :
-                'bg-green-500 animate-pulse'
-              }`}></div>
+            <div className="flex items-center space-x-4">
+              <div className={`relative w-4 h-4 rounded-full ${
+                workflowStatus === 'idle' ? 'bg-muted-foreground/40' :
+                workflowStatus === 'partial' ? 'bg-warning animate-pulse' :
+                workflowStatus === 'active' ? 'bg-primary animate-pulse' :
+                'bg-success animate-pulse'
+              }`}>
+                {workflowStatus !== 'idle' && (
+                  <div className={`absolute inset-0 rounded-full animate-ping ${
+                    workflowStatus === 'partial' ? 'bg-warning' :
+                    workflowStatus === 'active' ? 'bg-primary' :
+                    'bg-success'
+                  } opacity-75`}></div>
+                )}
+              </div>
               <div>
-                <h3 className={`font-semibold ${
-                  workflowStatus === 'idle' ? 'text-gray-700' :
-                  workflowStatus === 'partial' ? 'text-yellow-700' :
-                  workflowStatus === 'active' ? 'text-blue-700' :
-                  'text-green-700'
+                <h3 className={`text-lg font-semibold ${
+                  workflowStatus === 'idle' ? 'text-muted-foreground' :
+                  workflowStatus === 'partial' ? 'text-warning' :
+                  workflowStatus === 'active' ? 'text-primary' :
+                  'text-success'
                 }`}>
-                  Trading Workflow Status: {
+                  Trading Workflow: {
                     workflowStatus === 'idle' ? 'Standby' :
                     workflowStatus === 'partial' ? 'Partially Active' :
                     workflowStatus === 'active' ? 'Active' :
                     'Fully Optimized'
                   }
                 </h3>
-                <p className={`text-sm ${
-                  workflowStatus === 'idle' ? 'text-gray-600' :
-                  workflowStatus === 'partial' ? 'text-yellow-600' :
-                  workflowStatus === 'active' ? 'text-blue-600' :
-                  'text-green-600'
-                }`}>
+                <p className="text-sm text-muted-foreground mt-1">
                   {
                     workflowStatus === 'idle' ? 'Enable features below to start automated trading' :
                     workflowStatus === 'partial' ? 'Some automation features are active' :
@@ -319,78 +591,188 @@ function DashboardContent() {
                 </p>
               </div>
             </div>
-            <div className="flex space-x-2">
-              {gainzAlgoActive && <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">GainzAlgo</span>}
-              {copyTradingActive && <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Copy Trading</span>}
-              {riskManagementActive && <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Risk Control</span>}
+            <div className="flex flex-wrap gap-2">
+              {gainzAlgoActive && (
+                <span className="px-3 py-1 bg-success/10 text-success text-xs font-medium rounded-full border border-success/20">
+                  GainzAlgo
+                </span>
+              )}
+              {copyTradingActive && (
+                <span className="px-3 py-1 bg-purple-500/10 text-purple-600 dark:text-purple-400 text-xs font-medium rounded-full border border-purple-500/20">
+                  Copy Trading
+                </span>
+              )}
+              {riskManagementActive && (
+                <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full border border-primary/20">
+                  Risk Control
+                </span>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Quick Stats */}
+        {/* Enhanced Quick Stats with Real-time Analytics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Strategies</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">3</p>
-                <p className="text-sm text-green-600 dark:text-green-400">2 profitable</p>
+          {/* Active Strategies Card */}
+          <div className="group bg-gradient-to-br from-card to-success/5 rounded-2xl shadow-lg border border-border p-6 hover:shadow-xl transition-all duration-300 hover:border-success/20 relative overflow-hidden">
+            {/* Animated background pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-success rounded-full -translate-y-16 translate-x-16 animate-pulse"></div>
+            </div>
+            <div className="relative">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <p className="text-sm font-medium text-muted-foreground">Active Strategies</p>
+                    <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                  </div>
+                  <p className="text-3xl font-bold text-card-foreground mb-1">3</p>
+                  <div className="flex items-center space-x-1">
+                    <TrendingUp className="h-3 w-3 text-success" />
+                    <p className="text-sm text-success font-medium">2 profitable</p>
+                  </div>
+                </div>
+                <div className="bg-success/10 p-4 rounded-xl group-hover:bg-success/20 transition-colors duration-300">
+                  <Bot className="h-7 w-7 text-success" />
+                </div>
               </div>
-              <div className="bg-green-100 dark:bg-green-900/20 p-3 rounded-lg">
-                <Bot className="h-6 w-6 text-green-600 dark:text-green-400" />
+              {/* Mini progress bar */}
+              <div className="w-full bg-muted rounded-full h-2 mb-2">
+                <div className="bg-success h-2 rounded-full transition-all duration-1000 ease-out" style={{width: '67%'}}></div>
               </div>
+              <p className="text-xs text-muted-foreground">67% success rate</p>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Open Positions</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">12</p>
-                <p className="text-sm text-blue-600 dark:text-blue-400">8 in profit</p>
+          {/* Open Positions Card */}
+          <div className="group bg-gradient-to-br from-card to-primary/5 rounded-2xl shadow-lg border border-border p-6 hover:shadow-xl transition-all duration-300 hover:border-primary/20 relative overflow-hidden">
+            {/* Animated background pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary rounded-full translate-y-12 -translate-x-12 animate-pulse"></div>
+            </div>
+            <div className="relative">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <p className="text-sm font-medium text-muted-foreground">Open Positions</p>
+                    <div className="flex space-x-1">
+                      <div className="w-1 h-4 bg-primary rounded-full animate-pulse"></div>
+                      <div className="w-1 h-4 bg-primary/60 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                      <div className="w-1 h-4 bg-primary/30 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                    </div>
+                  </div>
+                  <p className="text-3xl font-bold text-card-foreground mb-1">12</p>
+                  <div className="flex items-center space-x-1">
+                    <TrendingUp className="h-3 w-3 text-primary" />
+                    <p className="text-sm text-primary font-medium">8 in profit</p>
+                  </div>
+                </div>
+                <div className="bg-primary/10 p-4 rounded-xl group-hover:bg-primary/20 transition-colors duration-300">
+                  <Target className="h-7 w-7 text-primary" />
+                </div>
               </div>
-              <div className="bg-blue-100 dark:bg-blue-900/20 p-3 rounded-lg">
-                <Target className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+              {/* Mini chart visualization */}
+              <div className="flex items-end space-x-1 h-8 mb-2">
+                <div className="w-2 bg-primary/30 rounded-t" style={{height: '20%'}}></div>
+                <div className="w-2 bg-primary/50 rounded-t" style={{height: '40%'}}></div>
+                <div className="w-2 bg-primary/70 rounded-t" style={{height: '60%'}}></div>
+                <div className="w-2 bg-primary rounded-t" style={{height: '80%'}}></div>
+                <div className="w-2 bg-primary rounded-t" style={{height: '100%'}}></div>
+                <div className="w-2 bg-primary/80 rounded-t" style={{height: '90%'}}></div>
               </div>
+              <p className="text-xs text-muted-foreground">P&L trend: +$2,340</p>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Signals</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">5</p>
-                <p className="text-sm text-purple-600 dark:text-purple-400">High confidence</p>
+          {/* Active Signals Card */}
+          <div className="group bg-gradient-to-br from-card to-purple-500/5 rounded-2xl shadow-lg border border-border p-6 hover:shadow-xl transition-all duration-300 hover:border-purple-500/20 relative overflow-hidden">
+            {/* Animated background pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute top-1/2 right-0 w-20 h-20 bg-purple-500 rounded-full translate-x-10 animate-ping"></div>
+            </div>
+            <div className="relative">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <p className="text-sm font-medium text-muted-foreground">Active Signals</p>
+                    <div className="flex items-center space-x-1">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                      <span className="text-xs text-purple-600 dark:text-purple-400 font-medium">LIVE</span>
+                    </div>
+                  </div>
+                  <p className="text-3xl font-bold text-card-foreground mb-1">5</p>
+                  <div className="flex items-center space-x-1">
+                    <Zap className="h-3 w-3 text-purple-600 dark:text-purple-400" />
+                    <p className="text-sm text-purple-600 dark:text-purple-400 font-medium">High confidence</p>
+                  </div>
+                </div>
+                <div className="bg-purple-500/10 p-4 rounded-xl group-hover:bg-purple-500/20 transition-colors duration-300">
+                  <Zap className="h-7 w-7 text-purple-600 dark:text-purple-400" />
+                </div>
               </div>
-              <div className="bg-purple-100 dark:bg-purple-900/20 p-3 rounded-lg">
-                <Zap className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+              {/* Signal strength indicator */}
+              <div className="space-y-1 mb-2">
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">Signal Strength</span>
+                  <span className="text-purple-600 dark:text-purple-400 font-medium">92%</span>
+                </div>
+                <div className="w-full bg-muted rounded-full h-2">
+                  <div className="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full transition-all duration-1000 ease-out" style={{width: '92%'}}></div>
+                </div>
               </div>
+              <p className="text-xs text-muted-foreground">Last signal: 2 min ago</p>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Copiers</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">156</p>
-                <p className="text-sm text-orange-600 dark:text-orange-400">+8 today</p>
+          {/* Copiers Card */}
+          <div className="group bg-gradient-to-br from-card to-orange-500/5 rounded-2xl shadow-lg border border-border p-6 hover:shadow-xl transition-all duration-300 hover:border-orange-500/20 relative overflow-hidden">
+            {/* Animated background pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute bottom-0 right-0 w-28 h-28 bg-orange-500 rounded-full translate-y-14 translate-x-14 animate-pulse"></div>
+            </div>
+            <div className="relative">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <p className="text-sm font-medium text-muted-foreground">Copiers</p>
+                    <div className="flex items-center space-x-1">
+                      <TrendingUp className="h-3 w-3 text-orange-600 dark:text-orange-400" />
+                      <span className="text-xs text-orange-600 dark:text-orange-400 font-medium">Growing</span>
+                    </div>
+                  </div>
+                  <p className="text-3xl font-bold text-card-foreground mb-1">156</p>
+                  <div className="flex items-center space-x-1">
+                    <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+                    <p className="text-sm text-orange-600 dark:text-orange-400 font-medium">+8 today</p>
+                  </div>
+                </div>
+                <div className="bg-orange-500/10 p-4 rounded-xl group-hover:bg-orange-500/20 transition-colors duration-300">
+                  <Users className="h-7 w-7 text-orange-600 dark:text-orange-400" />
+                </div>
               </div>
-              <div className="bg-orange-100 dark:bg-orange-900/20 p-3 rounded-lg">
-                <Users className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+              {/* Growth chart */}
+              <div className="flex items-end justify-between h-6 mb-2">
+                <div className="w-1 bg-orange-500/40 rounded-t" style={{height: '30%'}}></div>
+                <div className="w-1 bg-orange-500/50 rounded-t" style={{height: '45%'}}></div>
+                <div className="w-1 bg-orange-500/60 rounded-t" style={{height: '60%'}}></div>
+                <div className="w-1 bg-orange-500/70 rounded-t" style={{height: '75%'}}></div>
+                <div className="w-1 bg-orange-500/80 rounded-t" style={{height: '85%'}}></div>
+                <div className="w-1 bg-orange-500 rounded-t" style={{height: '100%'}}></div>
               </div>
+              <p className="text-xs text-muted-foreground">Monthly growth: +12.5%</p>
             </div>
           </div>
         </div>
 
         {/* View Toggle */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-2">
+        <div className="bg-card rounded-2xl shadow-lg border border-border p-2">
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setActiveView('overview')}
-              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-colors ${
+              className={`flex-1 flex items-center justify-center space-x-2 py-4 px-6 rounded-xl font-medium transition-all duration-200 ${
                 activeView === 'overview'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+                  ? 'bg-primary text-primary-foreground shadow-lg'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
               }`}
             >
               <BarChart3 className="h-5 w-5" />
@@ -398,10 +780,10 @@ function DashboardContent() {
             </button>
             <button
               onClick={() => setActiveView('trading')}
-              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-colors ${
+              className={`flex-1 flex items-center justify-center space-x-2 py-4 px-6 rounded-xl font-medium transition-all duration-200 ${
                 activeView === 'trading'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+                  ? 'bg-primary text-primary-foreground shadow-lg'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
               }`}
             >
               <Target className="h-5 w-5" />
@@ -409,10 +791,10 @@ function DashboardContent() {
             </button>
             <button
               onClick={() => setActiveView('strategies')}
-              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-colors ${
+              className={`flex-1 flex items-center justify-center space-x-2 py-4 px-6 rounded-xl font-medium transition-all duration-200 ${
                 activeView === 'strategies'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+                  ? 'bg-primary text-primary-foreground shadow-lg'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
               }`}
             >
               <Bot className="h-5 w-5" />
@@ -420,10 +802,10 @@ function DashboardContent() {
             </button>
             <button
               onClick={() => setActiveView('automation')}
-              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-colors ${
+              className={`flex-1 flex items-center justify-center space-x-2 py-4 px-6 rounded-xl font-medium transition-all duration-200 ${
                 activeView === 'automation'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+                  ? 'bg-primary text-primary-foreground shadow-lg'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
               }`}
             >
               <Bot className="h-5 w-5" />
@@ -431,10 +813,10 @@ function DashboardContent() {
             </button>
             <button
               onClick={() => setActiveView('ai-signals')}
-              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-colors ${
+              className={`flex-1 flex items-center justify-center space-x-2 py-4 px-6 rounded-xl font-medium transition-all duration-200 ${
                 activeView === 'ai-signals'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+                  ? 'bg-primary text-primary-foreground shadow-lg'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
               }`}
             >
               <Brain className="h-5 w-5" />
@@ -442,10 +824,10 @@ function DashboardContent() {
             </button>
             <button
                onClick={() => setActiveView('templates')}
-               className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-colors ${
+               className={`flex-1 flex items-center justify-center space-x-2 py-4 px-6 rounded-xl font-medium transition-all duration-200 ${
                  activeView === 'templates'
-                   ? 'bg-blue-600 text-white shadow-sm'
-                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+                   ? 'bg-primary text-primary-foreground shadow-lg'
+                   : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                }`}
              >
                <BookOpen className="h-5 w-5" />
@@ -453,10 +835,10 @@ function DashboardContent() {
              </button>
              <button
                onClick={() => setActiveView('signals')}
-               className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-colors ${
+               className={`flex-1 flex items-center justify-center space-x-2 py-4 px-6 rounded-xl font-medium transition-all duration-200 ${
                  activeView === 'signals'
-                   ? 'bg-blue-600 text-white shadow-sm'
-                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+                   ? 'bg-primary text-primary-foreground shadow-lg'
+                   : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                }`}
              >
                <Zap className="h-5 w-5" />
@@ -464,10 +846,10 @@ function DashboardContent() {
              </button>
              <button
                onClick={() => setActiveView('backtesting')}
-               className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-colors ${
+               className={`flex-1 flex items-center justify-center space-x-2 py-4 px-6 rounded-xl font-medium transition-all duration-200 ${
                  activeView === 'backtesting'
-                   ? 'bg-blue-600 text-white shadow-sm'
-                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+                   ? 'bg-primary text-primary-foreground shadow-lg'
+                   : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                }`}
              >
                <BarChart3 className="h-5 w-5" />
@@ -475,10 +857,10 @@ function DashboardContent() {
              </button>
              <button
                onClick={() => setActiveView('performance-analytics')}
-               className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-colors ${
+               className={`flex-1 flex items-center justify-center space-x-2 py-4 px-6 rounded-xl font-medium transition-all duration-200 ${
                  activeView === 'performance-analytics'
-                   ? 'bg-blue-600 text-white shadow-sm'
-                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+                   ? 'bg-primary text-primary-foreground shadow-lg'
+                   : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                }`}
              >
                <Activity className="h-5 w-5" />
@@ -497,58 +879,58 @@ function DashboardContent() {
          {activeView === 'backtesting' && <BacktestingEngine />}
          {activeView === 'performance-analytics' && <PerformanceAnalytics />}
         {activeView === 'automation' && (
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* Workflow Status Overview */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Workflow Automation</h3>
-                <div className="flex items-center space-x-2">
+            <div className="bg-card rounded-xl shadow-lg border border-border p-8">
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-2xl font-bold text-foreground">Workflow Automation</h3>
+                <div className="flex items-center space-x-3">
                   <div className={`w-3 h-3 rounded-full ${
-                    workflowState.isConnected ? 'bg-green-500' : 'bg-red-500'
+                    workflowState.isConnected ? 'bg-success' : 'bg-destructive'
                   }`}></div>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                  <span className="text-sm text-muted-foreground font-medium">
                     {workflowState.isConnected ? 'Connected' : 'Disconnected'}
                   </span>
                 </div>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="bg-primary/5 border border-primary/20 p-6 rounded-xl">
+                  <div className="text-3xl font-bold text-primary">
                     {workflowState.workflows.length}
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Total Workflows</div>
+                  <div className="text-sm text-muted-foreground font-medium">Total Workflows</div>
                 </div>
-                <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+                <div className="bg-success/5 border border-success/20 p-6 rounded-xl">
+                  <div className="text-3xl font-bold text-success">
                     {workflowState.activeWorkflows.length}
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Active Workflows</div>
+                  <div className="text-sm text-muted-foreground font-medium">Active Workflows</div>
                 </div>
-                <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
-                  <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+                <div className="bg-secondary/5 border border-secondary/20 p-6 rounded-xl">
+                  <div className="text-3xl font-bold text-secondary-foreground">
                     {workflowState.recentExecutions.length}
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Recent Executions</div>
+                  <div className="text-sm text-muted-foreground font-medium">Recent Executions</div>
                 </div>
               </div>
             </div>
 
             {/* Available Workflows */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Available Workflows</h4>
-              <div className="space-y-4">
+            <div className="bg-card rounded-xl shadow-lg border border-border p-8">
+              <h4 className="text-xl font-semibold text-foreground mb-6">Available Workflows</h4>
+              <div className="space-y-6">
                 {workflowState.workflows.map((workflow) => (
-                  <div key={workflow.id} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                  <div key={workflow.id} className="flex items-center justify-between p-6 border border-border rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors">
                     <div className="flex-1">
-                      <div className="flex items-center space-x-3">
-                        <div className={`w-3 h-3 rounded-full ${
-                          workflow.isActive ? 'bg-green-500' : 'bg-gray-400'
+                      <div className="flex items-center space-x-4">
+                        <div className={`w-4 h-4 rounded-full ${
+                          workflow.isActive ? 'bg-success' : 'bg-muted-foreground'
                         }`}></div>
-                        <h5 className="font-medium text-gray-900 dark:text-white">{workflow.name}</h5>
+                        <h5 className="font-semibold text-foreground">{workflow.name}</h5>
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{workflow.description}</p>
-                      <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                      <p className="text-sm text-muted-foreground mt-2">{workflow.description}</p>
+                      <div className="flex items-center space-x-6 mt-3 text-xs text-muted-foreground">
                         <span>Executions: {workflow.executionCount}</span>
                         <span>Success Rate: {workflow.successRate}%</span>
                         {workflow.lastExecuted && (
@@ -556,13 +938,13 @@ function DashboardContent() {
                         )}
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3">
                       <button
                         onClick={() => toggleWorkflow(workflow.id)}
-                        className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                           workflow.isActive
-                            ? 'bg-red-100 text-red-700 hover:bg-red-200'
-                            : 'bg-green-100 text-green-700 hover:bg-green-200'
+                            ? 'bg-destructive/10 text-destructive hover:bg-destructive/20'
+                            : 'bg-success/10 text-success hover:bg-success/20'
                         }`}
                       >
                         {workflow.isActive ? 'Disable' : 'Enable'}
@@ -574,9 +956,9 @@ function DashboardContent() {
                             timestamp: new Date().toISOString()
                           });
                         }}
-                        className="px-3 py-1 bg-blue-100 text-blue-700 hover:bg-blue-200 rounded text-sm font-medium transition-colors flex items-center space-x-1"
+                        className="px-4 py-2 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2"
                       >
-                        <Play className="h-3 w-3" />
+                        <Play className="h-4 w-4" />
                         <span>Execute</span>
                       </button>
                       <button
@@ -589,9 +971,9 @@ function DashboardContent() {
                              timestamp: Date.now()
                            });
                         }}
-                        className="px-3 py-1 bg-purple-100 text-purple-700 hover:bg-purple-200 rounded text-sm font-medium transition-colors flex items-center space-x-1"
+                        className="px-4 py-2 bg-secondary/10 text-secondary-foreground hover:bg-secondary/20 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2"
                       >
-                        <ArrowRight className="h-3 w-3" />
+                        <ArrowRight className="h-4 w-4" />
                         <span>Go to Trading</span>
                       </button>
                     </div>
@@ -601,9 +983,9 @@ function DashboardContent() {
             </div>
 
             {/* Quick Workflow Actions */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Workflow Actions</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-card rounded-xl shadow-lg border border-border p-8">
+              <h4 className="text-xl font-semibold text-foreground mb-6">Quick Workflow Actions</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <button
                   onClick={() => {
                     const stopLossWorkflow = workflowState.workflows.find(w => w.id === 'auto-stop-loss');
@@ -617,11 +999,11 @@ function DashboardContent() {
                       });
                     }
                   }}
-                  className="p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors text-center"
+                  className="p-6 border-2 border-dashed border-border rounded-xl hover:border-primary hover:bg-primary/5 transition-all duration-200 text-center group"
                 >
-                  <Shield className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                  <div className="font-medium text-gray-900 dark:text-white">Auto Stop Loss</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Activate & Go to Trading</div>
+                  <Shield className="h-10 w-10 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                  <div className="font-semibold text-foreground">Auto Stop Loss</div>
+                  <div className="text-sm text-muted-foreground">Activate & Go to Trading</div>
                 </button>
                 
                 <button
@@ -637,11 +1019,11 @@ function DashboardContent() {
                       });
                     }
                   }}
-                  className="p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-green-500 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors text-center"
+                  className="p-6 border-2 border-dashed border-border rounded-xl hover:border-success hover:bg-success/5 transition-all duration-200 text-center group"
                 >
-                  <Target className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                  <div className="font-medium text-gray-900 dark:text-white">Profit Taking</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Activate & Go to Trading</div>
+                  <Target className="h-10 w-10 text-success mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                  <div className="font-semibold text-foreground">Profit Taking</div>
+                  <div className="text-sm text-muted-foreground">Activate & Go to Trading</div>
                 </button>
                 
                 <button
@@ -651,15 +1033,18 @@ function DashboardContent() {
                        name: 'Portfolio Rebalancing',
                        description: 'Automatically rebalance portfolio based on target allocations',
                        isActive: false,
-                       steps: []
+                       triggers: [],
+                       actions: [],
+                       conditions: [],
+                       status: 'inactive'
                      });
                     alert('🔄 Portfolio Rebalancing Workflow Created!\n\n✅ Target allocation analysis\n✅ Automatic rebalancing triggers\n✅ Risk-adjusted position sizing\n✅ Execution optimization');
                   }}
-                  className="p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors text-center"
+                  className="p-6 border-2 border-dashed border-border rounded-xl hover:border-warning hover:bg-warning/5 transition-all duration-200 text-center group"
                 >
-                  <BarChart3 className="h-8 w-8 text-orange-600 mx-auto mb-2" />
-                  <div className="font-medium text-gray-900 dark:text-white">Portfolio Rebalancing</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Create & Activate</div>
+                  <BarChart3 className="h-10 w-10 text-warning mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                  <div className="font-semibold text-foreground">Portfolio Rebalancing</div>
+                  <div className="text-sm text-muted-foreground">Create & Activate</div>
                 </button>
                 
                 <button
@@ -669,15 +1054,18 @@ function DashboardContent() {
                        name: 'Market Scanner',
                        description: 'Scan markets for trading opportunities based on technical indicators',
                        isActive: false,
-                       steps: []
+                       triggers: [],
+                       actions: [],
+                       conditions: [],
+                       status: 'inactive'
                      });
                     alert('🔍 Market Scanner Workflow Created!\n\n✅ Real-time market scanning\n✅ Technical indicator analysis\n✅ Opportunity alerts\n✅ Automated signal generation');
                   }}
-                  className="p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-purple-500 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors text-center"
+                  className="p-6 border-2 border-dashed border-border rounded-xl hover:border-secondary hover:bg-secondary/5 transition-all duration-200 text-center group"
                 >
-                  <Zap className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-                  <div className="font-medium text-gray-900 dark:text-white">Market Scanner</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Create & Activate</div>
+                  <Zap className="h-10 w-10 text-secondary-foreground mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                  <div className="font-semibold text-foreground">Market Scanner</div>
+                  <div className="text-sm text-muted-foreground">Create & Activate</div>
                 </button>
               </div>
               
@@ -732,7 +1120,10 @@ function DashboardContent() {
                           name: 'DCA Strategy',
                           description: 'Dollar-cost averaging with automated recurring purchases',
                           isActive: false,
-                          steps: []
+                          triggers: [],
+                          actions: [],
+                          conditions: [],
+                          status: 'inactive'
                         });
                        alert('💰 DCA Strategy Template Applied!\n\n✅ Weekly recurring purchases\n✅ Automated dollar-cost averaging\n✅ Risk-adjusted position sizing');
                      }}>
@@ -747,7 +1138,10 @@ function DashboardContent() {
                           name: 'Momentum Trading',
                           description: 'Automated momentum-based trading strategy',
                           isActive: false,
-                          steps: []
+                          triggers: [],
+                          actions: [],
+                          conditions: [],
+                          status: 'inactive'
                         });
                        alert('⚡ Momentum Trading Template Applied!\n\n✅ Technical indicator triggers\n✅ Momentum-based entries\n✅ Automated position management');
                      }}>
@@ -762,7 +1156,10 @@ function DashboardContent() {
                           name: 'Risk Management Suite',
                           description: 'Comprehensive risk management and protection',
                           isActive: false,
-                          steps: []
+                          triggers: [],
+                          actions: [],
+                          conditions: [],
+                          status: 'inactive'
                         });
                        alert('🛡️ Risk Management Suite Applied!\n\n✅ Automated stop-losses\n✅ Position size management\n✅ Drawdown protection\n✅ Portfolio risk monitoring');
                      }}>
@@ -797,7 +1194,7 @@ function DashboardContent() {
                             {workflow?.name || execution.workflowId}
                           </div>
                           <div className="text-sm text-gray-600 dark:text-gray-400">
-                            {new Date(execution.startTime).toLocaleString()}
+                            {new Date(execution.startedAt).toLocaleString()}
                           </div>
                         </div>
                         <div className={`px-2 py-1 rounded text-xs font-medium ${
@@ -876,6 +1273,311 @@ function DashboardContent() {
               {riskManagementActive ? 'Risk Controls Active' : 'Enable Risk Controls'}
             </button>
           </div>
+      </div>
+
+      {/* Feature Comparison Table */}
+      <div className="mt-12 mb-12">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-foreground mb-4">Why Choose KAIROQUANTUM?</h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Compare our AI-powered features with traditional trading platforms
+          </p>
+        </div>
+
+        <div className="bg-card rounded-2xl shadow-lg border border-border overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gradient-to-r from-primary/10 to-purple-500/10">
+                <tr>
+                  <th className="text-left p-6 font-semibold text-foreground">Features</th>
+                  <th className="text-center p-6 font-semibold text-foreground">
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className="w-8 h-8 bg-gradient-to-r from-primary to-purple-600 rounded-lg flex items-center justify-center">
+                        <Bot className="h-4 w-4 text-white" />
+                      </div>
+                      <span>KAIROQUANTUM</span>
+                    </div>
+                  </th>
+                  <th className="text-center p-6 font-semibold text-muted-foreground">Traditional Platforms</th>
+                  <th className="text-center p-6 font-semibold text-muted-foreground">Manual Trading</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                <tr className="hover:bg-muted/50 transition-colors">
+                  <td className="p-6 font-medium text-foreground">AI-Powered Signal Generation</td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-success rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-destructive rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-destructive rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                </tr>
+                <tr className="hover:bg-muted/50 transition-colors">
+                  <td className="p-6 font-medium text-foreground">24/7 Automated Trading</td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-success rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-yellow-500 rounded-full">
+                      <span className="text-white text-xs font-bold">~</span>
+                    </div>
+                  </td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-destructive rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                </tr>
+                <tr className="hover:bg-muted/50 transition-colors">
+                  <td className="p-6 font-medium text-foreground">Advanced Risk Management</td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-success rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-yellow-500 rounded-full">
+                      <span className="text-white text-xs font-bold">~</span>
+                    </div>
+                  </td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-yellow-500 rounded-full">
+                      <span className="text-white text-xs font-bold">~</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr className="hover:bg-muted/50 transition-colors">
+                  <td className="p-6 font-medium text-foreground">Copy Trading Network</td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-success rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-destructive rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-destructive rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                </tr>
+                <tr className="hover:bg-muted/50 transition-colors">
+                  <td className="p-6 font-medium text-foreground">Real-time Market Analysis</td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-success rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-yellow-500 rounded-full">
+                      <span className="text-white text-xs font-bold">~</span>
+                    </div>
+                  </td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-destructive rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                </tr>
+                <tr className="hover:bg-muted/50 transition-colors">
+                  <td className="p-6 font-medium text-foreground">Multi-Broker Integration</td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-success rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-yellow-500 rounded-full">
+                      <span className="text-white text-xs font-bold">~</span>
+                    </div>
+                  </td>
+                  <td className="p-6 text-center">
+                    <div className="inline-flex items-center justify-center w-8 h-8 bg-destructive rounded-full">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div className="bg-gradient-to-r from-primary/5 to-purple-500/5 p-6 border-t border-border">
+            <div className="flex items-center justify-center space-x-8">
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-success rounded-full"></div>
+                <span className="text-sm text-muted-foreground">Full Support</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
+                <span className="text-sm text-muted-foreground">Partial Support</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-destructive rounded-full"></div>
+                <span className="text-sm text-muted-foreground">Not Available</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Success Stories & Testimonials Section */}
+      <div className="mt-12 mb-8">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-foreground mb-4">Trusted by Successful Traders</h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Join thousands of traders who have transformed their trading with KAIROQUANTUM's AI-powered automation
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {/* Testimonial 1 */}
+          <div className="bg-gradient-to-br from-card to-success/5 rounded-2xl p-6 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="flex items-center mb-4">
+              <div className="flex text-yellow-400">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-4 w-4 fill-current" />
+                ))}
+              </div>
+              <span className="ml-2 text-sm text-muted-foreground">5.0</span>
+            </div>
+            <blockquote className="text-foreground mb-4">
+              "KAIROQUANTUM's AI signals increased my win rate from 45% to 78% in just 3 months. The automation features saved me hours of manual analysis daily."
+            </blockquote>
+            <div className="flex items-center">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+                MK
+              </div>
+              <div className="ml-3">
+                <div className="font-semibold text-foreground">Michael K.</div>
+                <div className="text-sm text-muted-foreground">Professional Trader</div>
+              </div>
+            </div>
+            <div className="mt-4 p-3 bg-success/10 rounded-lg border border-success/20">
+              <div className="text-sm text-success font-medium">+$47,230 profit in Q1</div>
+            </div>
+          </div>
+
+          {/* Testimonial 2 */}
+          <div className="bg-gradient-to-br from-card to-primary/5 rounded-2xl p-6 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="flex items-center mb-4">
+              <div className="flex text-yellow-400">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-4 w-4 fill-current" />
+                ))}
+              </div>
+              <span className="ml-2 text-sm text-muted-foreground">5.0</span>
+            </div>
+            <blockquote className="text-foreground mb-4">
+              "The copy trading feature is incredible. I follow top performers and my portfolio has grown 156% this year while I focus on my day job."
+            </blockquote>
+            <div className="flex items-center">
+              <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-semibold">
+                SL
+              </div>
+              <div className="ml-3">
+                <div className="font-semibold text-foreground">Sarah L.</div>
+                <div className="text-sm text-muted-foreground">Part-time Trader</div>
+              </div>
+            </div>
+            <div className="mt-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
+              <div className="text-sm text-primary font-medium">156% portfolio growth</div>
+            </div>
+          </div>
+
+          {/* Testimonial 3 */}
+          <div className="bg-gradient-to-br from-card to-purple-500/5 rounded-2xl p-6 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="flex items-center mb-4">
+              <div className="flex text-yellow-400">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-4 w-4 fill-current" />
+                ))}
+              </div>
+              <span className="ml-2 text-sm text-muted-foreground">5.0</span>
+            </div>
+            <blockquote className="text-foreground mb-4">
+              "Risk management tools are game-changing. Automated stop-losses and position sizing protected my capital during market volatility."
+            </blockquote>
+            <div className="flex items-center">
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center text-white font-semibold">
+                DJ
+              </div>
+              <div className="ml-3">
+                <div className="font-semibold text-foreground">David J.</div>
+                <div className="text-sm text-muted-foreground">Hedge Fund Manager</div>
+              </div>
+            </div>
+            <div className="mt-4 p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
+              <div className="text-sm text-purple-600 dark:text-purple-400 font-medium">Protected $2.1M portfolio</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Success Metrics */}
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/10 dark:to-purple-900/10 rounded-2xl p-8 border border-blue-200 dark:border-blue-800">
+          <div className="text-center mb-6">
+            <h3 className="text-2xl font-bold text-foreground mb-2">Platform Success Metrics</h3>
+            <p className="text-muted-foreground">Real results from our trading community</p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-primary mb-2">89%</div>
+              <div className="text-sm text-muted-foreground">Average Win Rate</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-success mb-2">$12.4M</div>
+              <div className="text-sm text-muted-foreground">Total Profits Generated</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">15,000+</div>
+              <div className="text-sm text-muted-foreground">Active Traders</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-2">24/7</div>
+              <div className="text-sm text-muted-foreground">AI Monitoring</div>
+            </div>
+          </div>
+        </div>
       </div>
       
       {/* Notification Center */}

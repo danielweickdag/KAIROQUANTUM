@@ -1,6 +1,6 @@
 'use client';
 
-import ProfitTargetSettings from '../../../../components/trading/ProfitTargetSettings';
+import ProfitTargetSettings from '@/components/trading/ProfitTargetSettings';
 import AppLayout from '@/components/layouts/AppLayout';
 import { Target, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';

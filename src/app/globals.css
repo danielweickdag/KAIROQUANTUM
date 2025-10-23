@@ -4,48 +4,72 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    /* Modern Light Theme - Inspired by template */
+    --background: 248 250 252; /* slate-50 */
+    --foreground: 15 23 42; /* slate-900 */
+    --card: 255 255 255; /* white */
+    --card-foreground: 15 23 42; /* slate-900 */
+    --popover: 255 255 255; /* white */
+    --popover-foreground: 15 23 42; /* slate-900 */
+    --primary: 59 130 246; /* blue-500 */
+    --primary-foreground: 255 255 255; /* white */
+    --secondary: 241 245 249; /* slate-100 */
+    --secondary-foreground: 51 65 85; /* slate-700 */
+    --muted: 248 250 252; /* slate-50 */
+    --muted-foreground: 100 116 139; /* slate-500 */
+    --accent: 239 246 255; /* blue-50 */
+    --accent-foreground: 30 64 175; /* blue-800 */
+    --destructive: 239 68 68; /* red-500 */
+    --destructive-foreground: 255 255 255; /* white */
+    --success: 34 197 94; /* green-500 */
+    --success-foreground: 255 255 255; /* white */
+    --warning: 245 158 11; /* amber-500 */
+    --warning-foreground: 255 255 255; /* white */
+    --border: 226 232 240; /* slate-200 */
+    --input: 241 245 249; /* slate-100 */
+    --ring: 59 130 246; /* blue-500 */
+    --radius: 0.75rem;
+    
+    /* Custom dashboard colors */
+    --sidebar-bg: 255 255 255; /* white */
+    --sidebar-border: 226 232 240; /* slate-200 */
+    --nav-hover: 248 250 252; /* slate-50 */
+    --nav-active: 239 246 255; /* blue-50 */
+    --nav-active-text: 30 64 175; /* blue-800 */
   }
 
   .dark {
-    --background: 210 11% 7%;
-    --foreground: 210 40% 98%;
-    --card: 210 11% 9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 210 11% 9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 200 100% 50%;
-    --primary-foreground: 210 11% 7%;
-    --secondary: 210 11% 13%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 210 11% 13%;
-    --muted-foreground: 210 20% 65%;
-    --accent: 210 11% 15%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 210 11% 15%;
-    --input: 210 11% 13%;
-    --ring: 200 100% 50%;
+    /* Modern Dark Theme */
+    --background: 2 6 23; /* slate-950 */
+    --foreground: 248 250 252; /* slate-50 */
+    --card: 15 23 42; /* slate-900 */
+    --card-foreground: 248 250 252; /* slate-50 */
+    --popover: 15 23 42; /* slate-900 */
+    --popover-foreground: 248 250 252; /* slate-50 */
+    --primary: 59 130 246; /* blue-500 */
+    --primary-foreground: 255 255 255; /* white */
+    --secondary: 30 41 59; /* slate-800 */
+    --secondary-foreground: 226 232 240; /* slate-200 */
+    --muted: 30 41 59; /* slate-800 */
+    --muted-foreground: 148 163 184; /* slate-400 */
+    --accent: 30 58 138; /* blue-900 */
+    --accent-foreground: 147 197 253; /* blue-300 */
+    --destructive: 239 68 68; /* red-500 */
+    --destructive-foreground: 255 255 255; /* white */
+    --success: 34 197 94; /* green-500 */
+    --success-foreground: 255 255 255; /* white */
+    --warning: 245 158 11; /* amber-500 */
+    --warning-foreground: 255 255 255; /* white */
+    --border: 51 65 85; /* slate-700 */
+    --input: 30 41 59; /* slate-800 */
+    --ring: 59 130 246; /* blue-500 */
+    
+    /* Custom dashboard colors for dark mode */
+    --sidebar-bg: 15 23 42; /* slate-900 */
+    --sidebar-border: 51 65 85; /* slate-700 */
+    --nav-hover: 30 41 59; /* slate-800 */
+    --nav-active: 30 58 138; /* blue-900 */
+    --nav-active-text: 147 197 253; /* blue-300 */
   }
 }
 
