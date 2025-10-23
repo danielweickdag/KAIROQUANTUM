@@ -405,19 +405,59 @@ const PricingPlans: React.FC = () => {
 
   const handlePlanSelect = async (planId: string) => {
     setSelectedPlan(planId)
-    setShowOnboarding(true)
     console.log('Selected plan:', planId)
-    
-    // Automatically enable alerts for users who select a plan
-    try {
-      await alertService.enableAlerts();
-      console.log('Alerts automatically enabled for plan selection:', planId);
-    } catch (error) {
-      console.warn('Failed to auto-enable alerts for plan selection:', error);
+
+    // Map plan IDs to Stripe price IDs
+    const stripePriceIds: Record<string, string | undefined> = {
+      'pro-monthly': process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
+      'pro-annual': process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_ANNUAL,
+      'enterprise': process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_ENTERPRISE,
     }
-    
-    // In a real app, this would redirect to payment processing
-    // For demo purposes, we'll show the onboarding workflow
+
+    const priceId = stripePriceIds[planId]
+
+    // If no price ID (e.g., free trial, creator programs), show onboarding
+    if (!priceId) {
+      setShowOnboarding(true)
+      try {
+        await alertService.enableAlerts();
+        console.log('Alerts automatically enabled for plan selection:', planId);
+      } catch (error) {
+        console.warn('Failed to auto-enable alerts for plan selection:', error);
+      }
+      return
+    }
+
+    // For paid plans, redirect to Stripe Checkout
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        alert('Please log in to subscribe')
+        window.location.href = '/login'
+        return
+      }
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkout/create-checkout-session`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ priceId })
+      })
+
+      const data = await response.json()
+
+      if (data.success && data.url) {
+        // Redirect to Stripe Checkout
+        window.location.href = data.url
+      } else {
+        throw new Error(data.error || 'Failed to create checkout session')
+      }
+    } catch (error) {
+      console.error('Checkout error:', error)
+      alert('Failed to start checkout. Please try again.')
+    }
   }
 
   const getDisplayPrice = (tier: PricingTier) => {

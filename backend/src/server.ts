@@ -26,6 +26,11 @@ import webhookRoutes from './routes/webhooks';
 import billingRoutes from './routes/billing';
 import subscriptionRoutes from './routes/subscription';
 import comparativeProfitRoutes from './routes/comparativeProfit';
+import autotradingRoutes from './routes/autotrading';
+import checkoutRoutes from './routes/checkout';
+import subscriptionSyncRoutes from './routes/subscriptionSync';
+import feesRoutes from './routes/fees';
+import healthRoutes from './routes/health';
 import { getBrokerMonitoringService } from './services/BrokerMonitoringService';
 
 // Import middleware
@@ -98,6 +103,11 @@ app.use('/api/webhooks', webhookRoutes);
 app.use('/api/billing', billingRoutes);
 app.use('/api/subscription', subscriptionRoutes);
 app.use('/api/comparative-profit', comparativeProfitRoutes);
+app.use('/api/autotrading', autotradingRoutes);
+app.use('/api/checkout', checkoutRoutes);
+app.use('/api/subscription-sync', subscriptionSyncRoutes);
+app.use('/api/fees', feesRoutes);
+app.use('/api/health', healthRoutes);
 
 // Error handling middleware
 app.use(notFound);

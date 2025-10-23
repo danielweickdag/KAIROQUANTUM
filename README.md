@@ -1,454 +1,316 @@
 # 🚀 KAIRO QUANTUM
 
-**Advanced Algorithmic Trading Platform with AI-Powered Compliance & Analytics**
+**Advanced Algorithmic Trading Platform with AI-Powered Trading & Automated Fee Management**
 
-[![CI/CD](https://github.com/yourusername/KAIROQUANTUM/workflows/CI/badge.svg)](https://github.com/yourusername/KAIROQUANTUM/actions)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![Python](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![TypeScript](https://img.shields.io/badge/typescript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/next.js-15.5.3-black.svg)](https://nextjs.org/)
+[![Production](https://img.shields.io/badge/status-production%20ready-brightgreen.svg)]()
 
 ---
 
 ## 🌟 Overview
 
 KAIRO QUANTUM is a next-generation algorithmic trading platform that combines:
-- **AI-Powered Trading**: 95% profit algorithms with real-time execution
-- **Compliance Automation**: Pattern Day Trading, Wash Sales, Position Limits
-- **Comparative Analytics**: Benchmark your performance vs. S&P 500, NASDAQ, etc.
-- **Microservices Architecture**: Scalable TypeScript + Python hybrid system
-- **Enterprise Features**: Multi-broker support, real-time WebSockets, social trading
+- **AI-Powered Trading**: Advanced algorithms with real-time execution
+- **Transparent Fee System**: Complete fee calculator with Stripe Tax integration
+- **Multi-Broker Support**: Alpaca Markets and more
+- **Subscription Management**: Free, Pro, Elite, and Enterprise tiers
+- **Copy Trading**: Follow and replicate successful traders
+- **Real-Time Analytics**: Live market data and performance tracking
 
 ---
 
-## ⚡ Quick Start (Automated)
+## ⚡ Quick Start (One Command!)
 
-### One-Command Setup
+### Automated Setup & Launch
 
 ```bash
 # Clone repository
 git clone https://github.com/yourusername/KAIROQUANTUM.git
 cd KAIROQUANTUM
 
-# Run automated setup
-./scripts/setup.sh
-
-# Start all services
-./scripts/start.sh
+# Start all services (auto-installs dependencies)
+./start-all-services.sh
 ```
 
 **That's it!** 🎉
 
 Access your platform:
 - **Frontend**: http://localhost:3000
-- **API**: http://localhost:3002
-- **Analytics**: http://localhost:8000
-- **Docs**: http://localhost:8000/docs
+- **Backend API**: http://localhost:3002
+- **Python Analytics**: http://localhost:8000
+- **Health Check**: http://localhost:3002/api/health/status
+
+### Stop Services
+
+```bash
+./stop-all-services.sh
+```
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    KAIRO QUANTUM                            │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   Frontend (Next.js)  →  Node.js API  →  Python Analytics  │
-│      Port 3000            Port 3002         Port 8000       │
-│                                                             │
-│                    PostgreSQL Database                      │
-│                         Port 5432                           │
-│                                                             │
-│   External: Stripe, Alpaca Markets, Brokers                │
-└─────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│                     KAIRO QUANTUM                            │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│   Frontend (Next.js)  →  Node.js API  →  Python Analytics   │
+│      Port 3000             Port 3002         Port 8000       │
+│                                                              │
+│                    PostgreSQL Database                       │
+│                         Port 5432                            │
+│                                                              │
+│   External: Stripe, Alpaca Markets, WebSockets              │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 ### Microservices
 
 | Service | Technology | Port | Purpose |
 |---------|------------|------|---------|
-| **Frontend** | Next.js 14, React, Tailwind | 3000 | User interface |
-| **API Backend** | Node.js, TypeScript, Express | 3002 | Business logic, auth |
-| **Analytics** | Python 3.11, FastAPI | 8000 | Compliance, analytics |
-| **Database** | PostgreSQL 15 | 5432 | Data persistence |
+| **Frontend** | Next.js 15, React 19, Tailwind | 3000 | User interface & UX |
+| **Backend API** | Node.js, TypeScript, Express | 3002 | Business logic, auth, fees |
+| **Python Analytics** | Python 3.13, FastAPI | 8000 | Advanced analytics |
+| **Database** | PostgreSQL 14+ | 5432 | Data persistence |
 
 ---
 
-## 🎯 Features
+## 🎯 Key Features
 
 ### Trading & Execution
-- ✅ **Multi-Broker Integration**: Alpaca, Interactive Brokers, TD Ameritrade
+- ✅ **Multi-Broker Integration**: Alpaca Markets (more coming soon)
 - ✅ **Real-Time Execution**: WebSocket-based live trading
-- ✅ **95% Profit AI Bot**: Advanced algorithmic trading
-- ✅ **Copy Trading**: Follow top traders automatically
+- ✅ **AI Trading Bots**: Automated algorithmic trading
+- ✅ **Copy Trading**: Follow successful traders automatically
 - ✅ **Paper Trading**: Risk-free testing environment
+- ✅ **Portfolio Management**: Track and manage investments
 
-### Compliance & Risk
-- ✅ **Pattern Day Trading Detection**: Automated PDT monitoring
-- ✅ **Wash Sale Prevention**: 30-day rule enforcement
-- ✅ **Position Size Limits**: Risk management guardrails
-- ✅ **Leverage Controls**: Regulatory compliance (4x max)
-- ✅ **Audit Trail**: Complete compliance history
+### Fee Management (NEW!)
+- ✅ **Fee Calculator**: Real-time fee calculation before transactions
+- ✅ **Trading Fees**: 0.25% stock, 0.50% crypto, $0.65/contract options
+- ✅ **Withdrawal Fees**: Free ACH, $25 wire, 1.5% instant
+- ✅ **Tier Discounts**: Pro (20%/50%), Elite (50%/100%), Enterprise (100%/100%)
+- ✅ **Stripe Tax Integration**: Automatic tax calculation
+- ✅ **Fee History**: Complete transaction fee tracking
+- ✅ **Transparent Pricing**: No hidden fees
 
-### Analytics & Reporting
-- ✅ **Benchmark Comparison**: vs. SPY, QQQ, DIA, etc.
-- ✅ **Sharpe Ratio**: Risk-adjusted returns
-- ✅ **Performance Metrics**: Profit/loss, returns, etc.
-- ✅ **Real-Time Charts**: TradingView integration
-- ✅ **Export Reports**: PDF, CSV, Excel
-
-### Subscription & Monetization
+### Subscription Plans
+- ✅ **Free Tier**: Basic trading, standard fees
+- ✅ **Pro ($49/mo)**: 20% trading discount, 50% withdrawal discount
+- ✅ **Elite ($299/mo)**: 50% trading discount, FREE withdrawals
+- ✅ **Enterprise ($199+/mo)**: FREE trading, FREE withdrawals, priority support
 - ✅ **Stripe Integration**: Secure payment processing
-- ✅ **Tiered Plans**: Free, Pro ($99), Elite ($299)
-- ✅ **Feature Gating**: Access control by tier
-- ✅ **Billing Portal**: Self-service subscription management
+- ✅ **Self-Service Portal**: Manage subscriptions easily
+
+### Automation & Monitoring
+- ✅ **Health Check System**: Comprehensive service monitoring
+- ✅ **API Testing Suite**: Automated endpoint testing
+- ✅ **Service Dashboard**: Real-time status monitoring
+- ✅ **One-Command Deployment**: Start/stop all services easily
+- ✅ **Auto-Recovery**: Automatic service restarts
 
 ---
 
 ## 📦 Tech Stack
 
 ### Backend (Node.js)
-- **Framework**: Express.js
-- **Language**: TypeScript 5.0+
+- **Framework**: Express.js with TypeScript
 - **ORM**: Prisma
-- **Auth**: JWT with refresh tokens
-- **WebSocket**: Socket.io
-- **Testing**: Jest, Supertest
+- **Auth**: JWT with secure token management
+- **WebSocket**: Socket.io for real-time updates
+- **Payment**: Stripe API with Stripe Tax
+- **Security**: Helmet.js, CORS, rate limiting
 
 ### Analytics (Python)
 - **Framework**: FastAPI
-- **Language**: Python 3.11+
+- **Language**: Python 3.13+
 - **Database**: asyncpg (PostgreSQL)
 - **HTTP Client**: httpx
-- **Validation**: Pydantic
+- **Validation**: Pydantic v2
 
 ### Frontend
-- **Framework**: Next.js 14
+- **Framework**: Next.js 15.5.3
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Charts**: Chart.js, TradingView
+- **React**: React 19
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Charts**: TradingView, Chart.js
 - **State**: React Context API
 
 ### Infrastructure
-- **Database**: PostgreSQL 15
-- **Container**: Docker + Docker Compose
-- **CI/CD**: GitHub Actions
-- **Deployment**: Railway, Vercel, Render
-- **Monitoring**: Sentry, DataDog
+- **Database**: PostgreSQL 14+
+- **Deployment**: Vercel, Railway, VPS
+- **Monitoring**: Built-in health checks
+- **SSL**: Let's Encrypt / Cloudflare
 
 ---
 
-## 🚀 Deployment
+## 📚 Documentation
 
-### Automated Deployment
+### Complete Guides
+- **[Complete Documentation](COMPLETE_DOCUMENTATION.md)** - Full platform guide
+- **[Pre-Domain Setup](PRE_DOMAIN_SETUP.md)** - Production deployment checklist
+- **[Automation Guide](AUTOMATION_GUIDE.md)** - Service management & testing
+- **[API Reference](API_REFERENCE.md)** - Complete API documentation
+- **[Fees & Taxes](FEES_AND_TAXES.md)** - Fee structure & tax handling
+- **[Quick Start](QUICKSTART.md)** - Fast setup guide
+
+### Quick Links
+- Health Check: `http://localhost:3002/api/health/status`
+- API Endpoints: `http://localhost:3002/api/health/endpoints`
+- Python Docs: `http://localhost:8000/docs`
+- Fee Calculator: Integrated in dashboard
+
+---
+
+## 🚀 Installation & Setup
+
+### System Requirements
+
+**Development:**
+- Node.js 18+
+- Python 3.13+
+- PostgreSQL 14+
+- 8GB RAM minimum
+
+**Production:**
+- 4 CPU cores
+- 16GB RAM
+- 100GB SSD
+- Ubuntu 22.04 LTS recommended
+
+### Step 1: Clone Repository
 
 ```bash
-# Deploy to production
-./scripts/deploy.sh production
-
-# Deploy to staging
-./scripts/deploy.sh staging
-
-# Deploy specific service
-./scripts/deploy.sh production api
-./scripts/deploy.sh production analytics
+git clone https://github.com/yourusername/KAIROQUANTUM.git
+cd KAIROQUANTUM
 ```
 
-### Manual Deployment
+### Step 2: Configure Environment
 
-#### Railway (Recommended)
-
+**Frontend (.env.local):**
 ```bash
-# Install Railway CLI
-npm install -g @railway/cli
-
-# Login
-railway login
-
-# Deploy backend
-cd backend && railway up
-
-# Deploy Python service
-cd python-service && railway up
+NEXT_PUBLIC_API_URL=http://localhost:3002
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_your_key
+NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY=price_xxxxx
+NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_ANNUAL=price_xxxxx
+NEXT_PUBLIC_STRIPE_PRICE_ID_ENTERPRISE=price_xxxxx
 ```
 
-#### Docker Compose
+**Backend (backend/.env):**
+```bash
+NODE_ENV=development
+PORT=3002
+DATABASE_URL="postgresql://postgres:password@localhost:5432/kairo_db"
+JWT_SECRET=your_jwt_secret
+STRIPE_SECRET_KEY=sk_live_your_key
+STRIPE_WEBHOOK_SECRET=whsec_your_secret
+ALPACA_API_KEY=your_alpaca_key
+ALPACA_SECRET_KEY=your_alpaca_secret
+ALPACA_BASE_URL=https://paper-api.alpaca.markets
+CORS_ORIGIN=http://localhost:3000
+PYTHON_SERVICE_URL=http://localhost:8000
+```
+
+### Step 3: Setup Database
 
 ```bash
-# Production
-docker-compose -f docker-compose.prod.yml up -d
+# Create PostgreSQL database
+createdb kairo_db
 
-# Development
-docker-compose up -d
+# Run migrations
+cd backend
+npx prisma migrate deploy
+npx prisma generate
+```
+
+### Step 4: Start Services
+
+```bash
+# Automated (recommended)
+./start-all-services.sh
+
+# Manual
+# Terminal 1: Backend
+cd backend && npm run dev
+
+# Terminal 2: Python Service
+source venv/bin/activate && uvicorn main:app --reload --port 8000
+
+# Terminal 3: Frontend
+npm run dev
+```
+
+### Step 5: Verify Installation
+
+```bash
+# Run health check
+curl http://localhost:3002/api/health/status | jq .
+
+# Run API tests
+./backend/scripts/quick-api-test.sh
+```
+
+**Expected Output:**
+```
+=========================================
+KAIRO QUANTUM - Quick API Test
+=========================================
+
+✓ Testing /health
+  ✅ Basic health check: PASS
+✓ Testing /api/health/ping
+  ✅ Health ping: PASS
+...
+=========================================
+All critical endpoints tested!
+=========================================
 ```
 
 ---
 
 ## 🔧 Development
 
-### Prerequisites
-- Node.js 18+
-- Python 3.11+
-- PostgreSQL 15+
-- Docker (optional)
-
-### Setup
+### Running Tests
 
 ```bash
-# 1. Clone repository
-git clone https://github.com/yourusername/KAIROQUANTUM.git
-cd KAIROQUANTUM
+# Quick API test
+./backend/scripts/quick-api-test.sh
 
-# 2. Run automated setup
-./scripts/setup.sh
+# Comprehensive API test
+./backend/scripts/test-api-endpoints.sh
 
-# This script will:
-# - Install all dependencies
-# - Set up databases
-# - Configure environment variables
-# - Run migrations
-# - Seed initial data
-```
-
-### Running Services
-
-```bash
-# Start all services
-./scripts/start.sh
-
-# Or manually:
-
-# Terminal 1: Database
-docker-compose up postgres
-
-# Terminal 2: Backend API
-cd backend && npm run dev
-
-# Terminal 3: Python Analytics
-cd python-service && source venv/bin/activate && uvicorn main:app --reload
-
-# Terminal 4: Frontend
-npm run dev
-```
-
-### Testing
-
-```bash
-# Run all tests
-./scripts/test.sh
-
-# Backend tests
+# Backend unit tests
 cd backend && npm test
 
-# Python tests
-cd python-service && pytest
-
-# E2E tests
-npm run test:e2e
+# Frontend tests
+npm test
 ```
 
----
-
-## 📊 Database
-
-### Schema Management
+### Database Management
 
 ```bash
 # Create migration
-cd backend && npx prisma migrate dev --name your_migration_name
+cd backend
+npx prisma migrate dev --name migration_name
 
 # Apply migrations
 npx prisma migrate deploy
 
-# Reset database (⚠️ DANGER)
-npx prisma migrate reset
+# View database
+npx prisma studio
 ```
 
-### Seeding
+### Code Quality
 
 ```bash
-# Seed database
-cd backend && npm run seed
-
-# Seed with demo data
-npm run seed:demo
-```
-
----
-
-## 🔒 Security
-
-### Environment Variables
-
-**Never commit `.env` files!**
-
-Required variables:
-```bash
-# Database
-DATABASE_URL=postgresql://user:pass@localhost:5432/kairo_db
-
-# JWT
-JWT_SECRET=your-secret-key
-JWT_REFRESH_SECRET=your-refresh-secret
-
-# Stripe
-STRIPE_SECRET_KEY=sk_test_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-
-# Alpaca
-ALPACA_API_KEY=your-key
-ALPACA_SECRET_KEY=your-secret
-
-# Python Service
-PYTHON_SERVICE_URL=http://localhost:8000
-```
-
-### API Authentication
-
-```typescript
-// Include JWT token in headers
-const headers = {
-  'Authorization': `Bearer ${accessToken}`,
-  'Content-Type': 'application/json'
-};
-```
-
----
-
-## 📡 API Documentation
-
-### Backend API
-- **Swagger**: http://localhost:3002/api-docs
-- **Postman Collection**: `docs/postman_collection.json`
-
-### Python Analytics API
-- **Swagger**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-
-### Key Endpoints
-
-```http
-# Authentication
-POST /api/auth/login
-POST /api/auth/register
-POST /api/auth/refresh
-
-# Trading
-POST /api/trades
-GET  /api/trades/{id}
-GET  /api/portfolios
-
-# Subscriptions
-GET  /api/subscription/plans
-POST /api/subscription/checkout
-GET  /api/subscription/current
-
-# Analytics (Python)
-POST /trades
-GET  /users/{id}/comparative
-GET  /users/{id}/compliance
-GET  /users/{id}/metrics
-```
-
----
-
-## 🤖 Automation
-
-### CI/CD Pipeline
-
-Automated on every push:
-- ✅ Linting (ESLint, Ruff)
-- ✅ Type checking (TypeScript, mypy)
-- ✅ Unit tests
-- ✅ Integration tests
-- ✅ Security scanning
-- ✅ Build verification
-- ✅ Auto-deployment (production branch)
-
-### Scheduled Tasks
-
-```yaml
-# Daily benchmark updates
-0 0 * * * /scripts/update-benchmarks.sh
-
-# Weekly compliance audit
-0 0 * * 0 /scripts/compliance-audit.sh
-
-# Monthly reports
-0 0 1 * * /scripts/generate-reports.sh
-```
-
----
-
-## 📈 Monitoring
-
-### Health Checks
-- **Backend**: `http://localhost:3002/health`
-- **Analytics**: `http://localhost:8000/health`
-- **Database**: Connection pool status
-
-### Metrics Dashboard
-- Request latency (p50, p95, p99)
-- Error rates by endpoint
-- Database query performance
-- Background job queue length
-- Subscription conversion rate
-
-### Alerts
-- API downtime > 1 minute
-- Error rate > 1%
-- Database connections > 80%
-- Failed compliance checks
-
----
-
-## 🧪 Testing
-
-### Test Coverage
-
-| Service | Coverage | Status |
-|---------|----------|--------|
-| Backend | 85%+ | ✅ |
-| Python | 90%+ | ✅ |
-| Frontend | 75%+ | ✅ |
-
-### Running Tests
-
-```bash
-# Unit tests
-npm run test:unit
-
-# Integration tests
-npm run test:integration
-
-# E2E tests
-npm run test:e2e
-
-# Coverage report
-npm run test:coverage
-```
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Development Workflow
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
-
-### Code Style
-
-```bash
-# Lint code
+# Lint
 npm run lint
 
-# Format code
+# Format
 npm run format
 
 # Type check
@@ -457,69 +319,295 @@ npm run type-check
 
 ---
 
-## 📝 License
+## 📡 API Documentation
 
-This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
+### Authentication
+
+```bash
+# Register
+curl -X POST http://localhost:3002/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","password":"SecurePass123!","name":"John Doe"}'
+
+# Login
+curl -X POST http://localhost:3002/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","password":"SecurePass123!"}'
+```
+
+### Fee Calculator
+
+```bash
+# Calculate trading fee
+curl -X POST http://localhost:3002/api/fees/calculate/trading \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"amount":1000,"assetType":"stock"}'
+
+# Get fee schedule
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+  http://localhost:3002/api/fees/schedule
+```
+
+### Health Checks
+
+```bash
+# Quick ping
+curl http://localhost:3002/api/health/ping
+
+# Comprehensive status
+curl http://localhost:3002/api/health/status
+
+# Database health
+curl http://localhost:3002/api/health/database
+
+# List all endpoints
+curl http://localhost:3002/api/health/endpoints
+```
+
+**Full API Documentation**: See [API_REFERENCE.md](API_REFERENCE.md)
+
+---
+
+## 🚀 Production Deployment
+
+### Pre-Deployment Checklist
+
+See [PRE_DOMAIN_SETUP.md](PRE_DOMAIN_SETUP.md) for complete checklist.
+
+**Critical Items:**
+- [ ] Environment variables configured
+- [ ] Database migrations run
+- [ ] Stripe products created
+- [ ] Stripe webhooks configured
+- [ ] DNS records setup
+- [ ] SSL certificate installed
+- [ ] CORS configured
+- [ ] Monitoring enabled
+- [ ] Backups configured
+
+### Deployment Options
+
+**Option A: Vercel + Railway (Recommended)**
+
+```bash
+# Frontend to Vercel
+vercel --prod
+
+# Backend to Railway
+# Connect GitHub repository
+# Configure environment variables
+# Deploy
+```
+
+**Option B: VPS (Self-Hosted)**
+
+See [COMPLETE_DOCUMENTATION.md](COMPLETE_DOCUMENTATION.md) → Deployment Guide
+
+---
+
+## 🔒 Security
+
+### Best Practices
+- ✅ Environment variables never committed
+- ✅ JWT tokens with expiration
+- ✅ Rate limiting (100 req/15min)
+- ✅ Helmet.js security headers
+- ✅ CORS configured
+- ✅ HTTPS in production
+- ✅ Stripe webhook signature verification
+- ✅ SQL injection protection (Prisma)
+
+### Security Checklist
+- [ ] All dependencies updated
+- [ ] SSL certificate active
+- [ ] Firewall configured
+- [ ] Database encrypted
+- [ ] Backups automated
+- [ ] Error tracking enabled
+- [ ] Log monitoring active
+
+---
+
+## 📈 Monitoring & Health
+
+### Health Check Endpoints
+
+**Available Endpoints:**
+- `/health` - Basic health check
+- `/api/health/ping` - Quick ping (1s timeout)
+- `/api/health/status` - Comprehensive system status
+- `/api/health/database` - Database health with stats
+- `/api/health/endpoints` - List all 39 API endpoints
+
+**What's Monitored:**
+- PostgreSQL Database connection
+- Python Analytics Service
+- Stripe Payment API
+- Alpaca Broker API
+- Environment Configuration
+- Service uptime
+- Response times
+
+### Status Dashboard
+
+Built-in React component for admin dashboard:
+
+```typescript
+import ServiceStatusDashboard from '@/components/admin/ServiceStatusDashboard'
+
+// Shows real-time service health with auto-refresh
+<ServiceStatusDashboard />
+```
+
+---
+
+## 💰 Fee Structure
+
+### Trading Fees
+
+| Asset Type | Base Rate | Pro Discount | Elite Discount | Enterprise |
+|------------|-----------|--------------|----------------|------------|
+| Stock/ETF | 0.25% | 0.20% (20% off) | 0.125% (50% off) | FREE |
+| Crypto | 0.50% | 0.40% (20% off) | 0.25% (50% off) | FREE |
+| Options | $0.65/contract | $0.52 (20% off) | $0.33 (50% off) | FREE |
+
+### Withdrawal Fees
+
+| Method | Base Fee | Pro Discount | Elite | Enterprise |
+|--------|----------|--------------|-------|------------|
+| ACH | FREE | FREE | FREE | FREE |
+| Wire (Domestic) | $25 | $12.50 (50% off) | FREE | FREE |
+| Wire (International) | $45 | $22.50 (50% off) | FREE | FREE |
+| Crypto | 1% (min $5, max $50) | 0.5% (50% off) | FREE | FREE |
+| Instant | 1.5% (min $3) | 0.75% (50% off) | FREE | FREE |
+
+**Complete Fee Documentation**: See [FEES_AND_TAXES.md](FEES_AND_TAXES.md)
+
+---
+
+## 🛠️ Scripts & Automation
+
+### Service Management
+
+```bash
+# Start all services
+./start-all-services.sh
+
+# Stop all services
+./stop-all-services.sh
+```
+
+### Testing
+
+```bash
+# Quick API test (8 tests)
+./backend/scripts/quick-api-test.sh
+
+# Comprehensive API test (all 39 endpoints)
+./backend/scripts/test-api-endpoints.sh
+```
+
+### Database
+
+```bash
+# Backup database
+pg_dump kairo_db > backup.sql
+
+# Restore database
+psql kairo_db < backup.sql
+
+# Prisma Studio (visual editor)
+cd backend && npx prisma studio
+```
 
 ---
 
 ## 📞 Support
 
-- **Documentation**: https://docs.kairoquantum.com
-- **Discord**: https://discord.gg/kairoquantum
+### Documentation
+- **Complete Guide**: [COMPLETE_DOCUMENTATION.md](COMPLETE_DOCUMENTATION.md)
+- **API Reference**: [API_REFERENCE.md](API_REFERENCE.md)
+- **Deployment**: [PRE_DOMAIN_SETUP.md](PRE_DOMAIN_SETUP.md)
+- **Automation**: [AUTOMATION_GUIDE.md](AUTOMATION_GUIDE.md)
+
+### Contact
 - **Email**: support@kairoquantum.com
-- **Issues**: https://github.com/yourusername/KAIROQUANTUM/issues
+- **GitHub Issues**: https://github.com/yourusername/KAIROQUANTUM/issues
+- **Documentation**: https://docs.kairoquantum.com
 
 ---
 
 ## 🗺️ Roadmap
 
-### Q1 2025
-- [x] Multi-broker integration
-- [x] Compliance automation
-- [x] Comparative analytics
-- [x] Stripe subscriptions
+### ✅ Completed (v1.0.0)
+- [x] Multi-broker integration (Alpaca)
+- [x] Real-time trading execution
+- [x] Subscription management (Stripe)
+- [x] Fee calculator with Stripe Tax
+- [x] Health check system
+- [x] API automation & testing
+- [x] Service status dashboard
+- [x] Complete documentation
+
+### 🚧 Q1 2025
 - [ ] Mobile app (React Native)
-- [ ] Advanced charting
+- [ ] Advanced charting tools
+- [ ] Options trading support
+- [ ] Crypto trading integration
+- [ ] AI strategy optimizer
 
-### Q2 2025
-- [ ] Machine learning predictions
-- [ ] Options trading
-- [ ] Crypto support
+### 📅 Q2 2025
 - [ ] Social trading leaderboard
-- [ ] API marketplace
-
-### Q3 2025
-- [ ] Algo strategy builder
-- [ ] Backtesting engine v2
-- [ ] Risk management AI
+- [ ] Copy trading marketplace
+- [ ] Portfolio optimizer AI
+- [ ] Risk management dashboard
 - [ ] Multi-currency support
-- [ ] Advanced portfolio optimization
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **Alpaca Markets** - Trading & market data API
-- **Stripe** - Payment processing
+- **Alpaca Markets** - Trading API & market data
+- **Stripe** - Payment processing & tax management
 - **FastAPI** - Python web framework
 - **Next.js** - React framework
 - **Prisma** - Database ORM
-- **TradingView** - Charting library
+- **shadcn/ui** - UI components
 
 ---
 
-## 📊 Stats
+## 📊 Project Stats
 
-![GitHub Stars](https://img.shields.io/github/stars/yourusername/KAIROQUANTUM?style=social)
-![GitHub Forks](https://img.shields.io/github/forks/yourusername/KAIROQUANTUM?style=social)
-![GitHub Issues](https://img.shields.io/github/issues/yourusername/KAIROQUANTUM)
-![GitHub Pull Requests](https://img.shields.io/github/issues-pr/yourusername/KAIROQUANTUM)
+**Lines of Code**: ~50,000+
+**API Endpoints**: 39
+**Services**: 3 (Frontend, Backend, Python)
+**Database Tables**: 20+
+**Documentation**: 5 comprehensive guides
+**Test Coverage**: 85%+
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
 **Made with ❤️ by the KAIRO QUANTUM Team**
 
-**Last Updated**: 2025-10-23
 **Version**: 1.0.0
 **Status**: Production Ready 🚀
+**Last Updated**: 2025-10-23
+
+---
+
+## 🚀 Get Started Now!
+
+```bash
+git clone https://github.com/yourusername/KAIROQUANTUM.git
+cd KAIROQUANTUM
+./start-all-services.sh
+```
+
+Visit http://localhost:3000 and start trading! 📈

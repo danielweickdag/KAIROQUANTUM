@@ -51,6 +51,10 @@ model User {
   comments          Comment[]
   likes             Like[]
   brokerConnections BrokerConnection[]
+  feeTransactions   FeeTransaction[]
+  taxInformation    TaxInformation?
+  withdrawals       Withdrawal[]
+  payouts           Payout[]
 
   @@map("users")
 }
@@ -502,4 +506,130 @@ model BrokerTrade {
 
   @@unique([brokerConnectionId, tradeId])
   @@map("broker_trades")
+}
+
+// Fee and Tax Models
+model FeeTransaction {
+  id                String              @id @default(cuid())
+  userId            String
+  transactionType   FeeTransactionType
+  amount            Float               // Amount in cents
+  fee               Float               // Fee in cents
+  tax               Float               // Tax in cents
+  total             Float               // Total in cents
+  currency          String              @default("USD")
+  metadata          Json?               // Additional transaction data
+  createdAt         DateTime            @default(now())
+
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("fee_transactions")
+}
+
+model TaxInformation {
+  id                String   @id @default(cuid())
+  userId            String
+  taxId             String?  // Tax ID / SSN (encrypted)
+  country           String   @default("US")
+  state             String?
+  city              String?
+  zipCode           String?
+  address           String?
+  taxExempt         Boolean  @default(false)
+  w9Submitted       Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+  @@map("tax_information")
+}
+
+model Withdrawal {
+  id                String           @id @default(cuid())
+  userId            String
+  amount            Float            // Amount in cents
+  fee               Float            // Fee in cents
+  total             Float            // Total in cents
+  method            WithdrawalMethod
+  status            WithdrawalStatus @default(PENDING)
+  destination       String           // Bank account, crypto address, etc.
+  transactionHash   String?          // For crypto withdrawals
+  processedAt       DateTime?
+  failedReason      String?
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("withdrawals")
+}
+
+model Payout {
+  id                String        @id @default(cuid())
+  userId            String
+  amount            Float         // Amount in cents
+  fee               Float         // Fee in cents
+  total             Float         // Total in cents
+  method            PayoutMethod
+  status            PayoutStatus  @default(PENDING)
+  destination       String        // Bank account, PayPal, etc.
+  referenceId       String?       // External reference ID
+  processedAt       DateTime?
+  failedReason      String?
+  metadata          Json?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("payouts")
+}
+
+// Additional Enums for Fee/Tax System
+enum FeeTransactionType {
+  TRADING_STOCK
+  TRADING_CRYPTO
+  TRADING_OPTIONS
+  WITHDRAWAL_ACH
+  WITHDRAWAL_WIRE_DOMESTIC
+  WITHDRAWAL_WIRE_INTERNATIONAL
+  WITHDRAWAL_CRYPTO
+  WITHDRAWAL_INSTANT
+  PAYOUT_ACH
+  PAYOUT_WIRE
+  DEPOSIT
+}
+
+enum WithdrawalMethod {
+  ACH
+  WIRE_DOMESTIC
+  WIRE_INTERNATIONAL
+  CRYPTO
+  INSTANT
+}
+
+enum WithdrawalStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum PayoutMethod {
+  ACH
+  WIRE
+  PAYPAL
+  CHECK
+}
+
+enum PayoutStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
 }

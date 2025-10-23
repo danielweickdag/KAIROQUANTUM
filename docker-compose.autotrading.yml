@@ -1,0 +1,89 @@
+version: "3.8"
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: kairo-db-autotrading
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-kairo_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pass}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - kairo-network
+
+  # Python Analytics Service
+  analytics:
+    build:
+      context: ./python-service
+      dockerfile: Dockerfile.poetry
+    container_name: kairo-analytics-autotrading
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-pass}@db:5432/${POSTGRES_DB:-kairo_db}
+      - STRIPE_SECRET=${STRIPE_SECRET:-sk_test_xxx}
+      - ALPACA_API_KEY=${ALPACA_API_KEY}
+      - ALPACA_SECRET_KEY=${ALPACA_SECRET_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - kairo-network
+
+  # Node.js Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: kairo-backend-autotrading
+    restart: always
+    ports:
+      - "3002:3002"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-pass}@db:5432/${POSTGRES_DB:-kairo_db}
+      - PYTHON_SERVICE_URL=http://analytics:8000
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET:-sk_test_xxx}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+    depends_on:
+      - db
+      - analytics
+    networks:
+      - kairo-network
+
+  # Next.js Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kairo-frontend-autotrading
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:3002
+      - NEXT_PUBLIC_PYTHON_URL=http://analytics:8000
+      - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
+    depends_on:
+      - backend
+    networks:
+      - kairo-network
+
+networks:
+  kairo-network:
+    driver: bridge
+
+volumes:
+  pgdata:
