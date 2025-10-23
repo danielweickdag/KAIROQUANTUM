@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from uuid import UUID
 import datetime
 from app import compliance, profit, db
+from app import compliance_simple, profit_simple  # Simplified clean implementations
 
 app = FastAPI(
     title="KAIRO Compliance + Comparative Profit API",
@@ -88,18 +89,33 @@ async def get_comparative(
     user_id: UUID,
     benchmark: str = "SPY",
     start_date: datetime.date = None,
-    end_date: datetime.date = None
+    end_date: datetime.date = None,
+    simple: bool = False
 ):
     """
     Get comparative profit analysis for a user against a benchmark
+
+    Args:
+        simple: Use pandas-based calculation (faster, cleaner) if True
+                Use comprehensive API-integrated version if False (default)
     """
     try:
-        result = await profit.get_user_vs_benchmark(
-            str(user_id),
-            benchmark,
-            start_date,
-            end_date
-        )
+        if simple:
+            # Use clean pandas-based implementation
+            result = await profit_simple.get_user_vs_benchmark(
+                str(user_id),
+                benchmark,
+                start_date,
+                end_date
+            )
+        else:
+            # Use comprehensive implementation with Alpaca API
+            result = await profit.get_user_vs_benchmark(
+                str(user_id),
+                benchmark,
+                start_date,
+                end_date
+            )
         return result
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -131,6 +147,29 @@ async def get_user_metrics(user_id: UUID):
         return metrics
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to get user metrics: {str(e)}")
+
+@app.get("/users/{user_id}/portfolio")
+async def get_portfolio(user_id: UUID):
+    """
+    Get comprehensive portfolio summary with per-symbol breakdown
+    Uses clean pandas-based calculation
+    """
+    try:
+        result = await profit_simple.get_portfolio_summary(str(user_id))
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get portfolio: {str(e)}")
+
+@app.get("/users/{user_id}/win-rate")
+async def get_win_rate(user_id: UUID):
+    """
+    Calculate win rate and trading statistics
+    """
+    try:
+        result = await profit_simple.calculate_win_rate(str(user_id))
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to calculate win rate: {str(e)}")
 
 @app.post("/benchmarks/update")
 async def update_benchmarks(background_tasks: BackgroundTasks):

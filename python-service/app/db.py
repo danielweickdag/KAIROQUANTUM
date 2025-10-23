@@ -99,6 +99,78 @@ async def get_user_trades(
         rows = await conn.fetch(query, *params)
         return [dict(row) for row in rows]
 
+async def get_recent_trades(
+    user_id: str,
+    symbol: str,
+    minutes: int = 1
+) -> List[Dict]:
+    """
+    Get recent trades for a user and symbol within the last N minutes
+    Used for quick wash trade detection
+    """
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        query = """
+            SELECT id, user_id, symbol, side, qty, price,
+                   (qty * price) as value, executed_at
+            FROM trades
+            WHERE user_id = $1
+              AND symbol = $2
+              AND executed_at >= NOW() - INTERVAL '%s minutes'
+            ORDER BY executed_at DESC
+        """ % minutes
+
+        rows = await conn.fetch(query, user_id, symbol)
+        return [dict(row) for row in rows]
+
+async def fetch_trades_for_user(user_id: str) -> List[Dict]:
+    """
+    Fetch all trades for a user (no date filter)
+    Alias for pandas-style data manipulation
+    """
+    return await get_user_trades(user_id)
+
+async def fetch_benchmark_range(
+    symbol: str,
+    start_date: date,
+    end_date: date
+) -> List[Dict]:
+    """
+    Alias for get_benchmark_range to match user's naming convention
+    """
+    return await get_benchmark_range(symbol, start_date, end_date)
+
+async def insert_compliance_audit(
+    user_id: str,
+    trade_id: str,
+    check_name: str,
+    status: str,
+    reason: Optional[str] = None,
+    metadata: Optional[Dict] = None
+) -> Dict:
+    """
+    Direct insert for compliance audit (simpler interface)
+    """
+    audit_data = {
+        "user_id": user_id,
+        "trade_id": trade_id,
+        "check_name": check_name,
+        "status": status,
+        "reason": reason,
+        "metadata": metadata or {}
+    }
+    return await create_compliance_audit(audit_data)
+
+async def cache_user_metrics(user_id: str, metrics: Dict):
+    """
+    Cache computed user metrics for fast retrieval
+    TODO: Implement Redis caching or database table
+    """
+    # For now, just log the metrics
+    # In production, store in Redis or a metrics table
+    print(f"Caching metrics for user {user_id}: {metrics}")
+    return metrics
+
 async def create_compliance_audit(audit_data: Dict) -> Dict:
     """
     Create a compliance audit record
